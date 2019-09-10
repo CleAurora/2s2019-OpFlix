@@ -1,9 +1,7 @@
 ﻿using OpFlix.WebApi.Domains;
 using OpFlix.WebApi.Interfaces;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace OpFlix.WebApi.Repositories
 {
