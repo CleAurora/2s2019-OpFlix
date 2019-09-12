@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpFlix.WebApi.Domains;
 using OpFlix.WebApi.Interfaces;
 using OpFlix.WebApi.Repositories;
+using System;
 
 namespace OpFlix.WebApi.Controllers
 {
@@ -32,6 +29,7 @@ namespace OpFlix.WebApi.Controllers
         /// </summary>
         /// <returns>Lista de Tipos de Mídia</returns>
         [HttpGet]
+        [Authorize]
         public IActionResult Listar()
         {
             return Ok(TipoRepository.Listar());
@@ -44,6 +42,7 @@ namespace OpFlix.WebApi.Controllers
         /// <param name="id">id</param>
         /// <returns>Tipo de Mídia buscado</returns>
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult BuscarPorId(int id)
         {
             try
@@ -65,6 +64,7 @@ namespace OpFlix.WebApi.Controllers
         /// </summary>
         /// <param name="id">id</param>
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Cadastrar(Tipos tipo)
         {
             try
@@ -84,6 +84,7 @@ namespace OpFlix.WebApi.Controllers
         /// </summary>
         /// <param name="id">id</param>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Atualizar(int id, Tipos tipo)
         {
             try

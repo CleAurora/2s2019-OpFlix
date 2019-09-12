@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpFlix.WebApi.Domains;
 using OpFlix.WebApi.Interfaces;
 using OpFlix.WebApi.Repositories;
+using System;
 
 namespace OpFlix.WebApi.Controllers
 {
@@ -31,6 +28,7 @@ namespace OpFlix.WebApi.Controllers
         /// </summary>
         /// <returns>Lista de Veículos</returns>
         [HttpGet]
+        [Authorize]
         public IActionResult Listar()
         {
             return Ok(VeiculoRepository.Listar());
@@ -43,6 +41,7 @@ namespace OpFlix.WebApi.Controllers
         /// <param name="id">IdVeículo</param>
         /// <returns>Veículo Buscado</returns>
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult BuscarPorId(int id)
         {
             try
@@ -66,6 +65,7 @@ namespace OpFlix.WebApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Cadastrar(Veiculos veiculo)
         {
             try
@@ -86,6 +86,7 @@ namespace OpFlix.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Atualizar(int id, Veiculos veiculo)
         {
             try

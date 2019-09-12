@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OpFlix.WebApi.Domains;
 using OpFlix.WebApi.Interfaces;
 using OpFlix.WebApi.Repositories;
+using System;
 
 namespace OpFlix.WebApi.Controllers
 {
@@ -29,6 +26,7 @@ namespace OpFlix.WebApi.Controllers
         /// Chama método que lista categorias
         /// </summary>
         /// <returns>Lista de Categorias</returns>
+        [Authorize]
         [HttpGet]
         public IActionResult Listar()
         {
@@ -42,6 +40,7 @@ namespace OpFlix.WebApi.Controllers
         /// <param name="id">id</param>
         /// <returns>Categoria Buscada</returns>
         [HttpGet("{id}")]
+        [Authorize]
         public IActionResult BuscarPorId(int id)
         {
             try
@@ -63,6 +62,7 @@ namespace OpFlix.WebApi.Controllers
         /// </summary>
         /// <param name="categoria"></param>
         [HttpPost]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Cadastrar(Categorias categoria)
         {
             try
@@ -83,6 +83,7 @@ namespace OpFlix.WebApi.Controllers
         /// <param name="id">id</param>
         /// <param name="categoria"></param>
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrador")]
         public IActionResult Atualizar(int id, Categorias categoria)
         {
             try

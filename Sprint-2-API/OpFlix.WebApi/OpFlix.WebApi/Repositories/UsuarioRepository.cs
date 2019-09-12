@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OpFlix.WebApi.Domains;
+using OpFlix.WebApi.Interfaces;
 using OpFlix.WebApi.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,13 @@ using System.Threading.Tasks;
 
 namespace OpFlix.WebApi.Repositories
 {
-    public class UsuarioRepository
+    public class UsuarioRepository: IUsuarioRepository
     {
+        public void Atualizar(Usuarios usuario)
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Método que busca Usuário por e-mail e senha
         /// </summary>
@@ -19,7 +25,7 @@ namespace OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                Usuarios UsuarioBuscado = ctx.Usuarios.FirstOrDefault(item => item.Email == login.Email && item.Senha == login.Senha);
+                Usuarios UsuarioBuscado = ctx.Usuarios.Include(x => x.IdPerfilNavigation).FirstOrDefault(item => item.Email == login.Email && item.Senha == login.Senha);
 
                 if (UsuarioBuscado == null)
                 {
@@ -27,6 +33,11 @@ namespace OpFlix.WebApi.Repositories
                 }
                 return UsuarioBuscado;
             }
+        }
+
+        public Usuarios BuscarPorId(int id)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -43,6 +54,21 @@ namespace OpFlix.WebApi.Repositories
 
                 return usuario.IdUsuario;
             }
+        }
+
+        public void Deletar(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Usuarios> Listar()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IUsuarioRepository.Cadastrar(Usuarios usuario)
+        {
+            throw new NotImplementedException();
         }
     }
 }

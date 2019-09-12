@@ -16,6 +16,11 @@ namespace OpFlix.WebApi.Controllers
     {
         UsuarioRepository UsuarioRepository = new UsuarioRepository();
 
+
+        /// <summary>
+        /// Método para realizar o login e gerar o token
+        /// </summary>
+        /// <param name="login">login</param>
         [HttpPost]
         public IActionResult Login (LoginViewModel login)
         {
@@ -23,15 +28,19 @@ namespace OpFlix.WebApi.Controllers
             {
 
 
-                Usuarios Usuario = UsuarioRepository.BuscarPorEmailESenha(login);
-                if (Usuario == null)
-                    return NotFound(new { mensagem = "Oops! O E-mail oua senha estão errados! Dá uma chacada aí!" });
+                Usuarios UsuarioBuscado = UsuarioRepository.BuscarPorEmailESenha(login);
+                if (UsuarioBuscado == null)
+                    return NotFound(new { mensagem = "Oops! O E-mail oua senha estão errados! Dá uma checada aí!" });
+
+                //Pego informações referente ao usuário
                 var claims = new[]
                 {
-                new Claim(JwtRegisteredClaimNames.Email, Usuario.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Usuario.IdUsuario.ToString())
+                new Claim(JwtRegisteredClaimNames.Email, UsuarioBuscado.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, UsuarioBuscado.IdUsuario.ToString()),
+                new Claim(ClaimTypes.Role, UsuarioBuscado.IdPerfilNavigation.Nome.ToString())
                 };
 
+                //Gera segurança e token
                 var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("opflix-chave-autenticacao"));
 
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
