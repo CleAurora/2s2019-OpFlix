@@ -7,7 +7,7 @@ namespace OpFlix.WebApi.Interfaces
     {
         List<Tipos> Listar();
 
-        void Cadastrar(Tipos tipo);
+        Tipos Cadastrar(Tipos tipo);
 
         Tipos BuscarPorId(int id);
 

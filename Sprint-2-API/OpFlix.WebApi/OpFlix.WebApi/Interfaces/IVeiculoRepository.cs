@@ -7,7 +7,7 @@ namespace OpFlix.WebApi.Interfaces
     {
         List<Veiculos> Listar();
 
-        void Cadastrar(Veiculos veiculo);
+        Veiculos Cadastrar(Veiculos veiculo);
 
         Veiculos BuscarPorId(int id);
 

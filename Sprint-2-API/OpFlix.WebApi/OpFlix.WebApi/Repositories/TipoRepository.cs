@@ -42,12 +42,13 @@ namespace OpFlix.WebApi.Repositories
         /// Cadastra Novo Tipo de Mídia
         /// </summary>
         /// <param name="tipo">tipo</param>
-        public void Cadastrar(Tipos tipo)
+        public Tipos Cadastrar(Tipos tipo)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 ctx.Tipos.Add(tipo);
                 ctx.SaveChanges();
+                return tipo;
             }
         }
 

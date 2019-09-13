@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using OpFlix.WebApi.Domains;
+using OpFlix.WebApi.Interfaces;
 using OpFlix.WebApi.Repositories;
 using OpFlix.WebApi.ViewModels;
 using System;
@@ -14,7 +15,12 @@ namespace OpFlix.WebApi.Controllers
     [ApiController]
     public class LoginController : ControllerBase
     {
-        UsuarioRepository UsuarioRepository = new UsuarioRepository();
+        public IUsuarioRepository UsuarioRepository { get; set; }
+
+        public LoginController()
+        {
+            UsuarioRepository = new UsuarioRepository();
+        }
 
 
         /// <summary>

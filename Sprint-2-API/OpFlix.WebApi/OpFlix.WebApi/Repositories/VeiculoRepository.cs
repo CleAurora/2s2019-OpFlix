@@ -41,12 +41,13 @@ namespace OpFlix.WebApi.Repositories
         /// Cadastra novo veículo de comunicação 
         /// </summary>
         /// <param name="veiculo">veículo</param>
-        public void Cadastrar(Veiculos veiculo)
+        public Veiculos Cadastrar(Veiculos veiculo)
         {
             using (OpFlixContext ctx =  new OpFlixContext())
             {
                 ctx.Veiculos.Add(veiculo);
                 ctx.SaveChanges();
+                return veiculo;
             }
         }
 

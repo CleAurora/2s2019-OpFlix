@@ -1,8 +1,5 @@
 ﻿using OpFlix.WebApi.Domains;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OpFlix.WebApi.Interfaces
 {
@@ -10,12 +7,14 @@ namespace OpFlix.WebApi.Interfaces
     {
         List<Lancamentos> Listar();
 
-        void Cadastrar(Lancamentos lancamento);
+        Lancamentos Cadastrar(Lancamentos lancamento);
 
         Lancamentos BuscarPorId(int id);
 
         void Atualizar(Lancamentos lancamento);
 
         void Deletar(int id);
+
+        List<Lancamentos> BuscarPorIdVeiculo(int id);
     }
 }

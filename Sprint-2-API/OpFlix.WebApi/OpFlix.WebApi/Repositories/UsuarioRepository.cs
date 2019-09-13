@@ -11,10 +11,7 @@ namespace OpFlix.WebApi.Repositories
 {
     public class UsuarioRepository: IUsuarioRepository
     {
-        public void Atualizar(Usuarios usuario)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         /// <summary>
         /// Método que busca Usuário por e-mail e senha
@@ -35,40 +32,84 @@ namespace OpFlix.WebApi.Repositories
             }
         }
 
+        /// <summary>
+        /// Método que busca usuário por id
+        /// </summary>
+        /// <param name="id">IdUsuario</param>
+        /// <returns>UsuárioBuscado</returns>
         public Usuarios BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Usuarios.FirstOrDefault(item => item.IdUsuario == id);
+            }
         }
 
         /// <summary>
-        /// Cadastra novo Usuário
+        /// Atualiza novo Usuário
         /// </summary>
-        /// <param name="usuario">usuario</param>
-        /// <returns>Id do Usuário Cadastrado</returns>
-        public int Cadastrar(Usuarios usuario)
+        /// <param name="usuario">Usuário
+        /// </param>
+        public void Atualizar(Usuarios usuario)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                Usuarios UsuarioBuscado = ctx.Usuarios.FirstOrDefault(item => item.IdUsuario == usuario.IdUsuario);
+
+                UsuarioBuscado.Nome = usuario.Nome;
+                UsuarioBuscado.Email = usuario.Email;
+                UsuarioBuscado.Senha = usuario.Senha;
+                UsuarioBuscado.Celular = usuario.Celular;
+                UsuarioBuscado.Endereco = usuario.Endereco;
+                UsuarioBuscado.IdPerfil = usuario.IdPerfil;
+
+                ctx.Usuarios.Update(UsuarioBuscado);
+                ctx.SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Cadastra Novo Usuário
+        /// </summary>
+        /// <param name="usuario"></param>
+        public Usuarios Cadastrar(Usuarios usuario)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 ctx.Usuarios.Add(usuario);
                 ctx.SaveChanges();
-
-                return usuario.IdUsuario;
+                return usuario;
             }
         }
 
+
+        /// <summary>
+        /// Deleta o usuário já cadastrado
+        /// </summary>
+        /// <param name="id">IdUsuario</param>
         public void Deletar(int id)
         {
-            throw new NotImplementedException();
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                Usuarios UsuarioBuscado = ctx.Usuarios.FirstOrDefault(item => item.IdUsuario == id);
+                ctx.Usuarios.Remove(UsuarioBuscado);
+                ctx.SaveChanges();
+            }
         }
 
+
+        /// <summary>
+        /// Lista Usuários Cadastrados
+        /// </summary>
+        /// <returns>Lista de Usuários</returns>
         public List<Usuarios> Listar()
         {
-            throw new NotImplementedException();
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Usuarios.ToList();
+            }
         }
 
-        void IUsuarioRepository.Cadastrar(Usuarios usuario)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

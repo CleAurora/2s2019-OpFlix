@@ -59,6 +59,7 @@ namespace OpFlix.WebApi.Controllers
         /// Chama método que cadastra Novo Lançamento
         /// </summary>
         /// <param name="lancamento">Lançamento</param>
+        /// <returns>Lançamento Cadastrado</returns>
         [HttpPost]
         [Authorize(Roles = "Administrador")]
         public IActionResult Cadastrar(Lancamentos lancamento)
@@ -66,7 +67,7 @@ namespace OpFlix.WebApi.Controllers
             try
             {
                 LancamentoRepository.Cadastrar(lancamento);
-                return Ok();
+                return Ok(lancamento);
             }
             catch (Exception ex)
             {
@@ -119,6 +120,25 @@ namespace OpFlix.WebApi.Controllers
                 return BadRequest(new { mensagem = "Oops! Tem erro aqui... " + ex.Message });
             }
         }
-        
+
+        /// <summary>
+        /// Chama Método de Buscar Lançamento por Veículo
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Veículos Buscados</returns>
+        [HttpGet("{id}")]
+        [Authorize]
+        public IActionResult BuscaPorIdVeiculo(int id)
+        {
+            try
+            {
+                return Ok(LancamentoRepository.BuscarPorIdVeiculo(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Oops! Tem erro aqui... " + ex.Message });
+            }
+        }
+
     }
 }

@@ -23,6 +23,9 @@ namespace OpFlix.WebApi.Domains
         public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Veiculos> Veiculos { get; set; }
 
+        public virtual DbSet<Favoritos> Favoritos { get; set; }
+
+
         // Unable to generate entity type for table 'dbo.Favoritos'. Please see the warning messages.
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -36,6 +39,18 @@ namespace OpFlix.WebApi.Domains
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Favoritos>().HasKey(p => new { p.IdUsuario, p.IdLancamento });
+
+            modelBuilder.Entity<Favoritos>()
+                .HasOne<Usuarios>(sc =>sc.Usuario)
+                .WithMany(s => s.Favoritos)
+                .HasForeignKey(sc => sc.IdUsuario);
+
+            modelBuilder.Entity<Favoritos>()
+               .HasOne<Lancamentos>(sc => sc.Lancamento)
+               .WithMany(s => s.Favoritos)
+               .HasForeignKey(sc => sc.IdLancamento);
+
             modelBuilder.Entity<Categorias>(entity =>
             {
                 entity.HasKey(e => e.IdCategoria);

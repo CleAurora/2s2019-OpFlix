@@ -1,8 +1,6 @@
 ﻿using OpFlix.WebApi.Domains;
-using System;
+using OpFlix.WebApi.ViewModels;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace OpFlix.WebApi.Interfaces
 {
@@ -10,9 +8,11 @@ namespace OpFlix.WebApi.Interfaces
     {
         List<Usuarios> Listar();
 
-        void Cadastrar(Usuarios usuario);
+        Usuarios Cadastrar(Usuarios usuario);
 
         Usuarios BuscarPorId(int id);
+
+        Usuarios BuscarPorEmailESenha(LoginViewModel login);
 
         void Atualizar(Usuarios usuario);
 

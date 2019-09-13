@@ -14,5 +14,6 @@ namespace OpFlix.WebApi.Domains
         public int? IdPerfil { get; set; }
 
         public Perfis IdPerfilNavigation { get; set; }
+        public List<Favoritos> Favoritos { get; set; }
     }
 }

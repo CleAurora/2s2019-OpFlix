@@ -63,6 +63,7 @@ namespace OpFlix.WebApi.Controllers
         /// Chama método para cadastrar novo tipo de mídia
         /// </summary>
         /// <param name="id">id</param>
+        /// <returns>Tipo de mídia Cadastrada</returns>
         [HttpPost]
         [Authorize(Roles = "Administrador")]
         public IActionResult Cadastrar(Tipos tipo)
@@ -70,7 +71,7 @@ namespace OpFlix.WebApi.Controllers
             try
             {
                 TipoRepository.Cadastrar(tipo);
-                return Ok();
+                return Ok(tipo);
             }
             catch (Exception ex)
             {

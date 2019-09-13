@@ -61,6 +61,7 @@ namespace OpFlix.WebApi.Controllers
         /// Cadastra nova Categoria
         /// </summary>
         /// <param name="categoria"></param>
+        /// <returns>Categoria Cadastrada</returns>
         [HttpPost]
         [Authorize(Roles = "Administrador")]
         public IActionResult Cadastrar(Categorias categoria)
@@ -68,7 +69,7 @@ namespace OpFlix.WebApi.Controllers
             try
             {
                 CategoriaRepository.Cadastrar(categoria);
-                return Ok();
+                return Ok(categoria);
             }
             catch(Exception ex)
             {

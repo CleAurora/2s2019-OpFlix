@@ -44,12 +44,13 @@ namespace OpFlix.WebApi.Repositories
         /// Cadastra Categoria
         /// </summary>
         /// <param name="categoria">categoria</param>
-        public void Cadastrar(Categorias categoria)
+        public Categorias Cadastrar(Categorias categoria)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 ctx.Categorias.Add(categoria);
                 ctx.SaveChanges();
+                return categoria;
             }
         }
 

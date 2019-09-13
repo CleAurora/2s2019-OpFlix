@@ -63,7 +63,7 @@ namespace OpFlix.WebApi.Controllers
         /// Chama método de Cadastro
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>Veículo Cadastrado</returns>
         [HttpPost]
         [Authorize(Roles = "Administrador")]
         public IActionResult Cadastrar(Veiculos veiculo)
@@ -73,7 +73,7 @@ namespace OpFlix.WebApi.Controllers
                 //int UsuarioId = Convert.ToInt32 (HttpContext.User.Claims.First(item => item.Type == JwtRegisteredClaimNames.Jti).Value);
 
                 VeiculoRepository.Cadastrar(veiculo);
-                return Ok();
+                return Ok(veiculo);
             }
             catch (Exception ex)
             {

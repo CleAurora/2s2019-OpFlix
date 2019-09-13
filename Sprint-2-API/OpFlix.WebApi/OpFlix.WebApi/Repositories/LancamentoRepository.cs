@@ -51,12 +51,13 @@ namespace OpFlix.WebApi.Repositories
         /// Cadastra Novo Lancamento
         /// </summary>
         /// <param name="lancamento">Lancamento</param>
-        public void Cadastrar(Lancamentos lancamento)
+        public Lancamentos Cadastrar(Lancamentos lancamento)
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 ctx.Lancamentos.Add(lancamento);
                 ctx.SaveChanges();
+                return lancamento;
             }
         }
 
@@ -86,6 +87,19 @@ namespace OpFlix.WebApi.Repositories
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 return ctx.Lancamentos.ToList();
+            }
+        }
+
+        /// <summary>
+        /// Busca Lancamento por Veículo
+        /// </summary>
+        /// <param name="id">IdVeículo</param>
+        /// <returns>Lancamentos Buscados</returns>
+        public List<Lancamentos> BuscarPorIdVeiculo(int id)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Lancamentos.Where(item => item.IdVeiculo == id).ToList();
             }
         }
     }
