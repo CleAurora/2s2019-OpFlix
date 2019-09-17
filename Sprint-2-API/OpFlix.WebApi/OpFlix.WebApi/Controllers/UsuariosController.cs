@@ -143,6 +143,8 @@ namespace OpFlix.WebApi.Controllers
             }
         }
 
+        //usuarioDS.USUARIO[0].DESSEN = Util.HashValue(this.txtSenha.Text.Trim());
+
 
     }
 }

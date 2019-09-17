@@ -3,7 +3,6 @@ using OpFlix.WebApi.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace OpFlix.WebApi.Repositories
 {
@@ -100,6 +99,19 @@ namespace OpFlix.WebApi.Repositories
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 return ctx.Lancamentos.Where(item => item.IdVeiculo == id).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Busca Lançamento por Data de Lançamento
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public List<Lancamentos> BuscarPorData(DateTime data)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Lancamentos.Where(item => item.DataLancamento == data).ToList();
             }
         }
     }

@@ -126,13 +126,32 @@ namespace OpFlix.WebApi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Veículos Buscados</returns>
-        [HttpGet("{id}")]
+        [HttpGet("BuscaPorId{id}")]
         [Authorize]
         public IActionResult BuscaPorIdVeiculo(int id)
         {
             try
             {
                 return Ok(LancamentoRepository.BuscarPorIdVeiculo(id));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Oops! Tem erro aqui... " + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Chama método que Busca por Data
+        /// </summary>
+        /// <param name="data">Data de Lançamento</param>
+        /// <returns>Lançamento</returns>
+        [HttpGet("BuscaPorData{data}")]
+        [Authorize]
+        public IActionResult BuscarPorData(DateTime data)
+        {
+            try
+            {
+                return Ok(LancamentoRepository.BuscarPorData(data));
             }
             catch (Exception ex)
             {

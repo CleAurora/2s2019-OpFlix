@@ -1,4 +1,5 @@
 ﻿using OpFlix.WebApi.Domains;
+using System;
 using System.Collections.Generic;
 
 namespace OpFlix.WebApi.Interfaces
@@ -16,5 +17,7 @@ namespace OpFlix.WebApi.Interfaces
         void Deletar(int id);
 
         List<Lancamentos> BuscarPorIdVeiculo(int id);
+
+        List<Lancamentos> BuscarPorData(DateTime data);
     }
 }
