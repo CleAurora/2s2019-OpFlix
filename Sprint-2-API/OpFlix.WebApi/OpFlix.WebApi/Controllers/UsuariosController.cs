@@ -142,9 +142,5 @@ namespace OpFlix.WebApi.Controllers
                 return BadRequest(new { mensagem = "Oops! Tem erro aqui! " + ex.Message });
             }
         }
-
-        //usuarioDS.USUARIO[0].DESSEN = Util.HashValue(this.txtSenha.Text.Trim());
-
-
     }
 }

@@ -7,11 +7,13 @@ Use M_OpFlix
 insert into Perfis(Nome)
 values ('Administrador'), ('Cliente');
 
+/*6ED5833CF35286EBF8662B7B5949F0D742BBEC3F == 123456*/
+/*FBA20918F722838A8AF3C4CC3D7B2192E380C29D == 3110*/
 insert into Usuarios (Nome, Email, Senha, Celular, Endereco, IdPerfil)
-values	 ('Erik'	, 'erik@email.com'		,'123456'	, '999999999' ,'Rua A 1', 1)
-		,('Cassiana', 'cassiana@email.com'	,'123456'	, '899999999' ,'Rua H 2', 1)
-		,('Helena'	, 'helena@email.com'	,'123456'	, '799999999' ,'Rua C 3', 2)
-		,('Roberto'	, 'rob@email.com'		,'3110'		, '898999999' ,'Rua A 3', 2);
+values	 ('Erik'	, 'erik@email.com'		,'6ED5833CF35286EBF8662B7B5949F0D742BBEC3F'	, '999999999' ,'Rua A 1', 1)
+		,('Cassiana', 'cassiana@email.com'	,'6ED5833CF35286EBF8662B7B5949F0D742BBEC3F'	, '899999999' ,'Rua H 2', 1)
+		,('Helena'	, 'helena@email.com'	,'6ED5833CF35286EBF8662B7B5949F0D742BBEC3F'	, '799999999' ,'Rua C 3', 2)
+		,('Roberto'	, 'rob@email.com'		,'FBA20918F722838A8AF3C4CC3D7B2192E380C29D'		, '898999999' ,'Rua A 3', 2);
 
 insert into Categorias(Nome)
 values	('Ação'),	 ('Animação'), ('Aventura'),		  ('Comédia'),		 ('Drama'),

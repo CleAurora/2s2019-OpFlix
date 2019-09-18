@@ -25,7 +25,7 @@ namespace OpFlix.WebApi.Repositories
         {
             using (OpFlixContext ctx = new OpFlixContext())
             {
-                Usuarios UsuarioBuscado = ctx.Usuarios.Include(x => x.IdPerfilNavigation).FirstOrDefault(item => item.Email == login.Email && item.Senha == login.Senha);
+                Usuarios UsuarioBuscado = ctx.Usuarios.Include(x => x.IdPerfilNavigation).FirstOrDefault(item => item.Email == login.Email && item.Senha == HashValue(login.Senha));
 
                 if (UsuarioBuscado == null)
                 {
@@ -77,6 +77,8 @@ namespace OpFlix.WebApi.Repositories
         /// <param name="usuario"></param>
         public Usuarios Cadastrar(Usuarios usuario)
         {
+            usuario.Senha = HashValue(usuario.Senha);
+
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 ctx.Usuarios.Add(usuario);
