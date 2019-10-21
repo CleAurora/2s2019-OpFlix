@@ -47,8 +47,8 @@ class CadastroUsuario extends Component {
 
   cadastraInformacoes = (event) => {
     event.preventDefault();
-    console.log(this.state);
-    Axios.post('http://192.168.1.36:5000/api/usuarios/cadastrarcliente', {
+    console.log('olá', this.state);
+    Axios.post('http://localhost:5000/api/usuarios/CadastrarCliente', {
       nome: this.state.nome,
       email: this.state.email,
       senha: this.state.senha,
@@ -70,6 +70,11 @@ class CadastroUsuario extends Component {
 
   }
 
+  logout = (event) =>{
+    localStorage.removeItem("usuario-opflix");
+    localStorage.removeItem("isAdmin-opflix");
+    this.props.history.push('/');
+  }
 
 
   render() {

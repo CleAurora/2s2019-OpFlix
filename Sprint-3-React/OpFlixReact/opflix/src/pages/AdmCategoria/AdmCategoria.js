@@ -12,10 +12,14 @@ class Administrador extends Component {
     super();
     this.state = {
       lista: [],
+      nome: '',
     };
   }
 
-  // Funções para listar
+  atualizaNome = (event) => {
+    this.setState({ nome: event.target.value });
+  }
+
   listaCategoria = (event) =>{
     Axios.get('http://localhost:5000/api/categorias')
     .then(data => {
@@ -27,90 +31,41 @@ class Administrador extends Component {
   }
 
   listaLancamentos = (event) =>{
-    Axios.get('http://localhost:5000/api/lancamentos')
-    .then(data => {
-      this.setState({lista: data.nome})
-    })
-    .catch(erro =>{
-      console.log(erro);
-    });
+    this.props.history.push('/admLancamento');
   }
 
   listaTipo = (event) =>{
-    Axios.get('http://localhost:5000/api/tipos')
-    .then(data => {
-      this.setState({lista: data.nome})
-    })
-    .catch(erro =>{
-      console.log(erro);
-    });
+    this.props.history.push('/admTipo');
   }
 
   listaUsuarios = (event) =>{
-    Axios.get('http://localhost:5000/api/usuarios')
-    .then(data => {
-      this.setState({lista: data.nome})
-    })
-    .catch(erro =>{
-      console.log(erro);
-    });
+    this.props.history.push('/admUsuario');
   }
 
   listaVeiculo = (event) =>{
-    Axios.get('http://localhost:5000/api/veiculos')
-    .then(data => {
-      this.setState({lista: data.nome})
+    this.props.history.push('/admVeiculo');
+  }
+
+  cadastraInformacoes = (event) =>{
+    event.preventDefault();
+    console.log.(this.state.nome);
+    Axios.post('http://localhost:5000/api/categorias', {
+      nome: this.state.nome,
     })
-    .catch(erro =>{
-      console.log(erro);
-    });
+    .then(this.listaAtualizada())
+    .catch(error => console.log(error)) 
   }
 
-  //Funções para cadastrar
-
-  //Categoria
-  atualizaNome = (event) => {
-    this.setState({ nome: event.target.value });
+  componentDidMount() {
+    Axios.get('http://localhost:5000/api/categorias')
+      .then(data => {
+        this.setState({ lista: data.data });
+      })
+      .catch(erro => {
+        console.log(erro);
+      });
   }
 
-  //Lançamento
-  atualizaNome = (event) => {
-    this.setState({nome: event.target.value });
-  }
-
-  atualizaSinopse = (event) => {
-    this.setState({ sinopse: event.target.value });
-  }
-
-  atualizaDuracao = (event) => {
-    this.setState({ duracao: event.target.value });
-  }
-
-  atualizaDataLancamento = (event) => {
-    this.setState({ dataLancamento: event.target.value });    
-  }
-
-  atualizaidCategoriaNavigation = (event) => {
-    this.setState({ idCategoria: event.target.value });
-  }
-
-  atualizaidClassificacaoNavigation = (event) => {
-    this.setState({ idClassificacao: event.target.value });
-  }
-
-  atualizaidTipoNavigation = (event) => {
-    this.setState({ idTipo: event.target.value });
-  }
-
-  atualizaidVeiculoNavigation = (event) =>{
-    this.setState({idVeiculo: event.target.value});
-  }
-
-  //Tipo
-  //Usuario
-  //Veículo
-
-  //Função para sair (no header)
   logout = (event) =>{
     localStorage.removeItem("usuario-opflix");
     localStorage.removeItem("isAdmin-opflix");
@@ -120,7 +75,7 @@ class Administrador extends Component {
   render() {
     return (
       <div>
-        <Header funcao={this.logout}/>
+        <Header funcao={this.logout} />
         <main className="conteudoPrincipal">
           <section className="conteudoPrincipalAdministrador">
             <div className="containerAdmin" >
@@ -137,10 +92,54 @@ class Administrador extends Component {
             </div>
           </section>
           <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
-          <form action=""></form>
-
-
           
+
+
+          {/* tabela Categoria*/}
+          <table id="tabela-lista">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Categoria</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-lista-corpo">
+              {
+                this.state.lista.map(element => {
+                  return (
+                    <tr>
+                      <td>{element.idCategoria}</td>
+                      <td>{element.nome}</td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
+
+          {/* Formulário para cadastrar Categoria */}
+          <input type="text"
+            placeholder="Digite a Categoria"
+            onChange={this.atualizaNome}
+            value={this.state.nome}
+          />
+
+          <p hidden={this.state.erro === ''}
+            style={{ color: "red", textAlign: "center" }}
+          >
+            {this.state.erro}
+          </p>
+
+          <button
+            className="conteudoPrincipal-btn"
+            onClick={this.cadastraInformacoes}
+          >
+            Cadastrar
+          </button>
+
+
+
+         
 
         </main>
         <Footer />

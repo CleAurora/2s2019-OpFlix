@@ -17,6 +17,10 @@ class Login extends Component {
     };
   }
 
+  // componentDidMount (){
+  //   console.log(bool(localStorage.getItem("isAdmin-opflix")))
+  // } 
+
   atualizaEmail = (event) => {
     this.setState({ email: event.target.value });
   }
@@ -30,7 +34,7 @@ class Login extends Component {
   logaUsuario = (event) => {
     event.preventDefault();
     console.log(this.state);
-    Axios.post('https://47ac1da2.ngrok.io/api/login', {
+    Axios.post('http://localhost:5000/api/login', {
       email: this.state.email,
       senha: this.state.senha,
     })
@@ -56,10 +60,16 @@ class Login extends Component {
       });
   }
 
+  logout = (event) =>{
+    localStorage.removeItem("usuario-opflix");
+    localStorage.removeItem("isAdmin-opflix");
+    this.props.history.push('/');
+  }
+
   render() {
     return (
       <div>
-        <Header />
+        <Header funcao={this.logout}/>
         <main className="conteudoPrincipal">
           <div className="cadastroPrincipal">
 

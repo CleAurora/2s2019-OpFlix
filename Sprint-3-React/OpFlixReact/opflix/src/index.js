@@ -28,7 +28,7 @@ const PrivateRouting = ({ component: Component }) => (
 const AdminPrivateRouting = ({ component: Component }) => (
     <Route
         render={props =>
-            localStorage.getItem("usuario-opflix") !== null && localStorage.getItem("isAdmin-opflix") === true ? (
+            localStorage.getItem("usuario-opflix") !== null && localStorage.getItem("isAdmin-opflix") == "true" ? (
                 <Component {...props} />
             ) : (
                     <Redirect
@@ -45,6 +45,11 @@ const routing = (
             <Switch>
                 <Route exact path='/' component={App} />
                 <AdminPrivateRouting path='/administrador' component={Administrador} />
+                <AdminPrivateRouting path='/admCategoria' component={AdmCategoria} />
+                <AdminPrivateRouting path='/admLancamento' component={AdmLancamento} />
+                <AdminPrivateRouting path='/admTipo' component={AdmTipo} />
+                <AdminPrivateRouting path='/admUsuario' component={AdmUsuario} />
+                <AdminPrivateRouting path='/admVeiculo' component={AdmVeiculo} />
                 <Route path='/cadastroUsuario' component={CadastroUsuario} />
                 <Route path='/login' component={Login} />
                 <PrivateRouting path='/telaDetalhesFilmes' component={TelaDetalhesFilmes} />

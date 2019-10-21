@@ -8,10 +8,16 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
 class TelaInicialUsuario extends Component {
+  logout = (event) =>{
+    localStorage.removeItem("usuario-opflix");
+    localStorage.removeItem("isAdmin-opflix");
+    this.props.history.push('/');
+  }
+  
   render() {
     return (
       <div>
-        <Header />
+        <Header funcao={this.logout}/>
         <main class="conteudoPrincipal">
           <img src={telaFundo} alt="Família vendo tv" class="telaFundo" />
           <section class="conteudoPrincipalTelaInicial">

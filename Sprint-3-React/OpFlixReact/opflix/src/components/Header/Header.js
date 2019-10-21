@@ -3,6 +3,7 @@ import logo from '../../assets/img/RoloFilme.jpg';
 // possibilidade de linkar
 import { Link } from 'react-router-dom';
 
+
 class Header extends Component {
   constructor(){
     super();
@@ -31,7 +32,7 @@ class Header extends Component {
           <ul hidden={!this.state.isAdmin}><Link className="itemMenu" to="/administrador">Administrador</Link></ul>
           <ul hidden={this.state.isLogged}><Link className="itemMenu" to="/cadastroUsuario">Cadastro</Link></ul>
           <ul hidden={this.state.isLogged}><Link className="itemMenu" to="/login">Login</Link></ul>
-          <ul hidden={!this.state.isLogged} onClick={this.logout}><a>Sair</a></ul>
+          <ul hidden={!this.state.isLogged} onClick={this.props.funcao}><a>Sair</a></ul>
         </nav>
       </header>
     );
