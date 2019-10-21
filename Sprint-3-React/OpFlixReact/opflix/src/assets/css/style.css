@@ -4,7 +4,12 @@
     display: flex;
     background-color: #fff;
     text-align: center;
-    justify-content: end; 
+    justify-content: end;
+}
+
+.itemMenu{
+    text-decoration: none;
+    color: black;
 }
 
 /*css h1 para tela Home*/

@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header';
 //importar imagem
 import imagem from "../../assets/img/familia-vendo-tv.jpg"
 
+//import estilos
 import "../../assets/css/style.css";
 
 class App extends Component {

@@ -60,7 +60,7 @@ namespace OpFlix.WebApi.Controllers
         }
 
         /// <summary>
-        /// Chama método para Cadastrar Usuário a ser cadastrado como comum, livre!
+        /// Chama método para Cadastrar Usuário a ser cadas'trado como comum, livre!
         /// </summary>
         /// <param name="id">IdUsuário</param>
         /// <returns>Usuário Cadastrado</returns>

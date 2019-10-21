@@ -36,7 +36,7 @@ namespace OpFlix.WebApi.Controllers
 
                 Usuarios UsuarioBuscado = UsuarioRepository.BuscarPorEmailESenha(login);
                 if (UsuarioBuscado == null)
-                    return NotFound(new { mensagem = "Oops! O E-mail oua senha estão errados! Dá uma checada aí!" });
+                    return NotFound(new { mensagem = "Oops! O E-mail ou a senha estão errados! Dá uma checada aí!" });
 
                 //Pego informações referente ao usuário
                 var claims = new[]
@@ -60,7 +60,8 @@ namespace OpFlix.WebApi.Controllers
 
                 return Ok(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token)
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    isAdmin = UsuarioBuscado.IdPerfil == 1  
                 });
             }
             catch (System.Exception ex)

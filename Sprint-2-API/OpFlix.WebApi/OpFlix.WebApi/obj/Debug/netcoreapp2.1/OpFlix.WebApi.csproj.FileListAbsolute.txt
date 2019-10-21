@@ -18,7 +18,6 @@ C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix
 C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\bin\Debug\netcoreapp2.1\OpFlix.WebApi.dll
 C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\bin\Debug\netcoreapp2.1\OpFlix.WebApi.pdb
 C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\obj\Debug\netcoreapp2.1\OpFlix.WebApi.csprojAssemblyReference.cache
-C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\obj\Debug\netcoreapp2.1\OpFlix.WebApi.csproj.CoreCompileInputs.cache
 C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\obj\Debug\netcoreapp2.1\OpFlix.WebApi.RazorAssemblyInfo.cache
 C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\obj\Debug\netcoreapp2.1\OpFlix.WebApi.RazorAssemblyInfo.cs
 C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\obj\Debug\netcoreapp2.1\OpFlix.WebApi.AssemblyInfoInputs.cache
@@ -26,3 +25,4 @@ C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix
 C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\obj\Debug\netcoreapp2.1\OpFlix.WebApi.RazorTargetAssemblyInfo.cache
 C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\obj\Debug\netcoreapp2.1\OpFlix.WebApi.dll
 C:\Users\CleAurora\Desktop\SENAI\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\obj\Debug\netcoreapp2.1\OpFlix.WebApi.pdb
+C:\Users\CleAurora\Desktop\Senai\2s2019-OpFlix\Sprint-2-API\OpFlix.WebApi\OpFlix.WebApi\bin\Debug\netcoreapp2.1\Properties\launchSettings.json
