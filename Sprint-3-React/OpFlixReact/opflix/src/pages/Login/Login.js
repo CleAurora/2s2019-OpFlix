@@ -33,7 +33,6 @@ class Login extends Component {
 
   logaUsuario = (event) => {
     event.preventDefault();
-    console.log(this.state);
     Axios.post('http://localhost:5000/api/login', {
       email: this.state.email,
       senha: this.state.senha,
@@ -48,7 +47,7 @@ class Login extends Component {
           if (response.data.isAdmin) {
             this.props.history.push('/administrador');
           } else {
-            this.props.history.push('/telaInicialUsuario')
+            this.props.history.push('/telaDetalhesFilmes')
           }
         } else {
           this.setState({ erro: "E-mail ou senha incorretos.." })

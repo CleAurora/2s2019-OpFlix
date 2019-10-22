@@ -12,12 +12,54 @@ class AdmCategoria extends Component {
     super();
     this.state = {
       lista: [],
+      listaCategoriasSelect: [],
       nome: ''
     };
   }
 
+  componentDidMount() {
+    this.listaCategoriasSelect()
+  }
+
   atualizaNome = (event) => {
     this.setState({ nome: event.target.value });
+  }
+
+  atualizaNomeBuscar = (event) => {
+    this.setState({ nome: event.target.value });
+  }
+
+  atualizaNomeAlterar = (event) => {
+    this.setState({ nome: event.target.value });
+  }
+
+  atualizaNomeDeletar = (event) => {
+    this.setState({ nome: event.target.value });
+  }
+
+  mudaParaTelaAdministrador = (event) => {
+    this.props.history.push('/administrador');
+  }
+
+  logout = (event) => {
+    localStorage.removeItem("usuario-opflix");
+    localStorage.removeItem("isAdmin-opflix");
+    this.props.history.push('/');
+  }
+
+  //verbos http
+  listaCategoriasSelect() {
+    Axios.get('http://localhost:5000/api/categorias', {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({ listaCategoriasSelect: response.data });
+        }
+      });
   }
 
   listaCategoria = (event) => {
@@ -35,30 +77,49 @@ class AdmCategoria extends Component {
             lista: response
           })
         } else {
-          this.setState({erro: "Oops! Tem erro.."})
+          this.setState({ erro: "Oops! Tem erro.." })
         }
       })
       .catch(erro => {
-        this.setState({erro: "Oops! Tem erro.."})
+        this.setState({ erro: "Oops! Tem erro.." })
       });
   }
 
-  mudaParaTelaAdministrador = (event) => {
-    this.props.history.push('/administrador');
-  }
-
-
-  cadastraInformacoes = (event) => {
+  listaCategoriaPorId = (event) => {
     event.preventDefault();
-    Axios.post('http://localhost:5000/api/categorias', {
-      nome: this.state.nome,
-    }, 
-    {
+
+    Axios.get('http://localhost:5000/api/categorias/{this.state.id}', {
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
       }
     })
+      .then(resposta => {
+        if (resposta.status === 200) {
+          let response = resposta.data;
+          this.setState({
+            lista: response
+          })
+        } else {
+          this.setState({ erro: "Oops! Tem erro.." })
+        }
+      })
+      .catch(erro => {
+        this.setState({ erro: "Oops! Tem erro.." })
+      });
+  }
+
+  cadastraInformacoes = (event) => {
+    event.preventDefault();
+    Axios.post('http://localhost:5000/api/categorias', {
+      nome: this.state.nome,
+    },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+        }
+      })
       .then(response => {
         if (response.status === 200) {
           this.setState({
@@ -72,11 +133,76 @@ class AdmCategoria extends Component {
       .catch(error => this.setState({ erro: 'Falha ao tentar cadastrar categoria!' }))
   }
 
-  logout = (event) => {
-    localStorage.removeItem("usuario-opflix");
-    localStorage.removeItem("isAdmin-opflix");
-    this.props.history.push('/');
+  AlteraInformacoes = (event) => {
+    event.preventDefault();
+    const categoriaASerAlterada = {
+      nome: this.state.nome
+    }
+
+    Axios.put('http://localhost:5000/api/categorias/' + this.state.id,
+      {
+        nome: this.state.nome
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+        }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({
+            lista: [],
+            nome: ''
+          });
+        } else {
+          this.setState({ erro: 'Oops!' })
+        }
+      })
+      .catch(error => this.setState({ erro: 'Falha ao tentar atualizar categoria!' }))
   }
+  //   update(e) {
+  //     e.preventDefault();
+  //     const employee = {
+  //         name: this.state.name,
+  //         age: this.state.age,
+  //         salary: this.state.salary,
+  //     }
+  //     axios.put('http://dummy.restapiexample.com/api/v1/update/{this.state.id}', employee)
+  //     .then(res => console.log(res.data));
+  // }
+
+  DeletaCategoria = (event) => {
+    event.preventDefault();
+    const categoriaASerDeletada = {
+      nome: this.state.nome
+    }
+    Axios.delete('http://localhost:5000/api/categorias/{this.state.id}', categoriaASerDeletada,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+        }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({
+            lista: [],
+            nome: ''
+          });
+        } else {
+          this.setState({ erro: 'Oops!' })
+        }
+      })
+      .catch(error => this.setState({ erro: 'Falha ao tentar atualizar categoria!' }))
+  }
+  // delete(e) {
+  //   e.preventDefault();
+  //   axios.delete('http://dummy.restapiexample.com/api/v1/delete/{this.state.id}')
+  //   .then(res => console.log(res.data));
+  // }
+
+
 
   render() {
     return (
@@ -86,7 +212,6 @@ class AdmCategoria extends Component {
           <section className="conteudoPrincipalAdministrador">
             <h2>Categorias</h2>
             <div className="containerAdmin">
-              <button className="conteudoPrincipal-btn" onClick={this.abreCadastro}>Cadastrar</button>
               <button className="conteudoPrincipal-btn" onClick={this.listaCategoria}>Listar</button>
               <button className="conteudoPrincipal-btn" onClick={this.mudaParaTelaAdministrador}>Voltar</button>
             </div>
@@ -132,11 +257,31 @@ class AdmCategoria extends Component {
               onClick={this.cadastraInformacoes}
             >
               Cadastrar
-          </button>
-          </div>
-        </main>
-        <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
+            </button>
 
+            <select id="option" onChange={this.atualizaidCategoriaNavigation} value={this.state.idCategoria}>
+              <option value="0" disabled >Categoria do Lançamento</option>
+              {this.state.listaCategoriasSelect.map(element => {
+                return (
+                  <option
+                    value={element.idCategoria}
+                    key={element.idCategoria} > {element.nome} </option>
+                )
+              })}
+            </select>
+            
+            <input type="text"
+              placeholder="Digite a Categoria a ser alterada"
+              onChange={this.atualizaNome}
+            />
+            <button className="conteudoPrincipal-btn" onClick={this.AlteraInformacoes}>Alterar Informações</button>
+            <button className="conteudoPrincipal-btn" onClick={this.DeletaCategoria}>Deleta Categoria</button>
+          </div>
+
+          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
+
+
+        </main>
         <Footer />
       </div>
     );

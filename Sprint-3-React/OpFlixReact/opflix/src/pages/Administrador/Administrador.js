@@ -39,7 +39,7 @@ class Administrador extends Component {
           <section className="conteudoPrincipalAdministrador">
             <div className="containerAdmin" >
               <select id="option__acessolivre" value={this.state.pagina} onChange={this.mudaEstadoPagina}> 
-                <option value="Selecione">Selecione</option>
+                <option value="Selecione">Selecione a tela desejada</option>
                 <option value="/admUsuario">Usuários</option>
                 <option value="/admTipo">Tipo</option>
                 <option value="/admCategoria">Categoria</option>

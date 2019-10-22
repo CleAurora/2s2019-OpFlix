@@ -131,7 +131,6 @@ class AdmUsuario extends Component {
           <section className="conteudoPrincipalAdministrador">
             <h2>Usuários</h2>
             <div className="containerAdmin">
-              <button className="conteudoPrincipal-btn" onClick={this.abreCadastro}>Cadastrar</button>
               <button className="conteudoPrincipal-btn" onClick={this.listaUsuarios}>Listar</button>
               <button className="conteudoPrincipal-btn" onClick={this.mudaParaTelaAdministrador}>Voltar</button>
             </div>

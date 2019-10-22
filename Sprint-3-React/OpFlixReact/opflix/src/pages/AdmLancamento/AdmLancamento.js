@@ -15,7 +15,6 @@ class AdmLancamento extends Component {
       lista: [],
       listaVeiculos: [],
       listaCategorias: [],
-      listaClassificacoes: [],
       listaTipos: [],
       nome: '',
       sinopse:'',
@@ -32,7 +31,11 @@ class AdmLancamento extends Component {
 
   componentDidMount() {
     this.listaVeiculos();
+    this.listaCategorias();
+    this.listaTipos()
   }
+
+  
 
   atualizaNome = (event) => {
     this.setState({nome: event.target.value });
@@ -66,13 +69,6 @@ class AdmLancamento extends Component {
     this.setState({idVeiculo: event.target.value});
   }
 
-  abreCadastro = (event) => {
-    this.setState({
-      mostraCadastro: true,
-      mostraLista: false
-    });
-  }
-
   listaVeiculos() {
     Axios.get('http://localhost:5000/api/veiculos', {
       headers: {
@@ -82,6 +78,32 @@ class AdmLancamento extends Component {
     .then(response => {
       if(response.status === 200){ 
         this.setState({ listaVeiculos: response.data });
+      }
+    });
+  }
+
+  listaCategorias() {
+    Axios.get('http://localhost:5000/api/categorias', {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }})
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({listaCategorias: response.data});
+        } 
+      });
+  }
+
+  listaTipos() {
+    Axios.get('http://localhost:5000/api/tipos', {
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }})
+    .then(response => {
+      if(response.status === 200){ 
+        this.setState({ listaTipos: response.data });
       }
     });
   }
@@ -138,7 +160,6 @@ class AdmLancamento extends Component {
           <section className="conteudoPrincipalAdministrador">
             <h2>Lançamento</h2>
             <div className="containerAdmin" >
-              <button className="conteudoPrincipal-btn" onClick={this.abreCadastro}>Cadastrar</button>
               <button className="conteudoPrincipal-btn" onClick={this.listaLancamentos}>Listar</button>
               <button className="conteudoPrincipal-btn" onClick={this.mudaParaTelaAdministrador}>Voltar</button>
             </div>
@@ -212,21 +233,22 @@ class AdmLancamento extends Component {
           <select id="option" onChange={this.atualizaidCategoriaNavigation} value={this.state.idCategoria}>
             <option value="0" disabled >Categoria do Lançamento</option>
             {this.state.listaCategorias.map(element => {
-              return (<option value={element.idCategoria} key={element.idCategoria} > {element.idCategoria} </option>)
+              return (<option value={element.idCategoria} key={element.idCategoria} > {element.nome} </option>)
             })}
           </select>
 
           <select id="option" onChange={this.atualizaidClassificacaoNavigation} value={this.state.idClassificacao}>
-            <option value="0" disabled >Classificação do Lançamento</option>
-            {this.state.listaClassificacoes.map(element => {
-              return (<option value={element.idClassificacao} key={element.idClassificacao} > {element.idClassificacao} </option>)
-            })}
+            <option value="Selecione">Classificação do Lançamento</option>
+            <option value="1">Livre</option>
+            <option value="2">Maior de 16 anos</option>
+            <option value="3">Maior de 18 anos</option>
           </select>
+
 
           <select id="option" onChange={this.atualizaidTipoNavigation} value={this.state.idTipo}>
             <option value="0" disabled >Tipo do Lançamento</option>
             {this.state.listaTipos.map(element => {
-              return (<option value={element.idTipo} key={element.idTipo} > {element.idTipo} </option>)
+              return (<option value={element.idTipo} key={element.idTipo} > {element.nome} </option>)
             })}
           </select>
           
