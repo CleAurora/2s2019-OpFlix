@@ -8,31 +8,97 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
 class TelaDetalhesFilmes extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      lista: [],
+      nome: '',
+      sinopse:'',
+      duracao: '',
+      dataLancamento: '',
+      idCategoria: '',
+      idClassificacao: '',
+      idTipo: '',
+      idVeiculo: ''
+    };
+  }
+
+  componentDidMount() {
+    this.listaLancamentos()
+  }
+
+  listaLancamentos() {
+    Axios.get('http://localhost:5000/api/lancamentos', {
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }})
+    .then(resposta => {
+      if(resposta.status === 200){ 
+        let response = resposta.data;
+        this.setState({
+          lista: response
+        })
+      }else{
+        this.setState({erro: "Oops! Tem erro.."});
+      }
+    })
+    .catch(erro => {
+      this.setState({erro: "Oops! Tem erro..."})
+    });
+  }
+
+
+  logout = (event) =>{
+    localStorage.removeItem("usuario-opflix");
+    localStorage.removeItem("isAdmin-opflix");
+    this.props.history.push('/');
+  }
+
   render() {
+        
     return (
       <div>
-        <Header />
-        <main class="conteudoPrincipal">
-          <img src={telaFundo} alt="Família vendo tv" class="telaFundo" />
-          <section class="conteudoPrincipalTelaInicial">
+        <Header funcao={this.logout}/>
+        <main className="conteudoPrincipal">
+          <section className="conteudoPrincipalTelaInicial">
             <table id="tabela-lista">
-
-              <thead>
-                <tr>
-                  <th>Nome</th>
-                  <th>Sinopse</th>
-                  <th>Duração</th>
-                  <th>Lançamento</th>
-                  <th>Veículo</th>
-                  <th>Categoria</th>
-                  <th>Favorito</th>
-                </tr>
-              </thead>
-
-              <tbody id="tabela-lista-corpo"></tbody>
-            </table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nome</th>
+                <th>Sinopse</th>
+                <th>Duração</th>
+                <th>Data Lançamento</th>
+                <th>Veículo</th>
+                <th>Categoria</th>
+                <th>Classificação</th>
+                <th>Tipo</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-lista-corpo">
+              {
+                this.state.lista.map(element => {
+                  return (
+                    <tr key={element.idLancamento}>
+                      <td>{element.idLancamento}</td>
+                      <td>{element.nome}</td>
+                      <td>{element.sinopse}</td>
+                      <td>{element.duracao}</td>
+                      <td>{element.dataLancamento}</td>
+                      <td>{element.idVeiculo}</td>
+                      <td>{element.idCategoria}</td>
+                      <td>{element.idClassificacao}</td>
+                      <td>{element.idTipo}</td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
+          </table>
           </section>
-          <form action=""></form>
+          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
         </main>
         <Footer />
       </div>

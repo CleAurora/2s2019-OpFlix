@@ -4,7 +4,6 @@
     display: flex;
     background-color: #fff;
     text-align: center;
-    justify-content: end;
 }
 
 .itemMenu{
@@ -30,7 +29,7 @@ footer{
 
 
 
-/*css tela de cadaatro de Usuário e de login*/
+/*css tela de cadastro de Usuário e de login*/
 .cadastroPrincipal{
     display: flex;
     justify-content: space-between;
@@ -58,6 +57,18 @@ footer{
     margin: 10px;
 }
 
+.container select{
+    padding: 10px 140px 10px 10px;
+    margin: 10px;
+}
+
+.container textarea{
+    padding: 10px 140px 100px 10px;
+    margin: 10px;
+}
+
+
+
 .container button{
     padding: 10px 10px;
     margin: 10px;
@@ -69,16 +80,7 @@ footer{
     width: 100%;
 }
 
-.containerAdmin{
-    display: flex;
-    flex-direction: row;
-    width: 96.7%;
-    justify-content: center;
-    padding: 20px;
-    background-color: #fff;
-    font-size: 40px;
 
-}
 
 .containerAdmin select{
     padding: 10px 140px 10px 10px;
@@ -87,4 +89,36 @@ footer{
 .conteudoPrincipalTelaInicial{
     display: flex;
     justify-content: space-around;
+}
+
+/*css das telas de administrador*/
+h2{ 
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color:#fff;
+}
+
+.containerAdmin{
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.containerAdmin button{
+    width: 30%;
+    align-self: center;
+    margin: 10px;
+}
+
+#tabela-lista{
+    width: 100%;
+    color: #fff;
+}
+
+#tabela-lista-corpo{
+    width: 100%;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
 }

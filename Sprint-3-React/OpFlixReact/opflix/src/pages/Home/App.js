@@ -20,7 +20,7 @@ class App extends Component {
       <div>
         <Header funcao={this.logout}/>
         <main>
-          <img class="imagemFundo" src={imagem} width="100%" />
+          <img className="imagemFundo" src={imagem} width="100%" alt="" />
           <h1>OPFLIX</h1>
         </main>
         <Footer />

@@ -12,10 +12,8 @@ class Header extends Component {
       isAdmin: localStorage.getItem("isAdmin-opflix") === true,
       isLogged: localStorage.getItem("usuario-opflix") !== null
     };
-    console.log(this.state)
   }
 
-  
   logout = (event) =>{
     localStorage.removeItem("usuario-opflix");
     localStorage.removeItem("isAdmin-opflix");
@@ -27,12 +25,12 @@ class Header extends Component {
       <header>
         <nav className="navbar">
           <ul>
-            <Link to="/"><img src={logo} width="50px" /></Link>
+            <Link to="/"><img src={logo} width="50px" alt="Rolo da Camera" /></Link>
           </ul>
           <ul hidden={!this.state.isAdmin}><Link className="itemMenu" to="/administrador">Administrador</Link></ul>
           <ul hidden={this.state.isLogged}><Link className="itemMenu" to="/cadastroUsuario">Cadastro</Link></ul>
           <ul hidden={this.state.isLogged}><Link className="itemMenu" to="/login">Login</Link></ul>
-          <ul hidden={!this.state.isLogged} onClick={this.props.funcao}><a>Sair</a></ul>
+          <ul hidden={!this.state.isLogged} onClick={this.props.funcao}><Link className="itemMenu" to="/">Sair</Link></ul>
         </nav>
       </header>
     );

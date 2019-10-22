@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 //imagem
 import telaFundo from '../../assets/img/Swisscom_12_17.jpg';
 
-import Axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 

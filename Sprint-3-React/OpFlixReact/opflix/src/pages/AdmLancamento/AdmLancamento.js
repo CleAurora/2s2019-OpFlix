@@ -7,20 +7,121 @@ import Axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
-class Administrador extends Component {
+class AdmLancamento extends Component {
   constructor() {
     super();
+
     this.state = {
       lista: [],
+      listaVeiculos: [],
+      listaCategorias: [],
+      listaClassificacoes: [],
+      listaTipos: [],
       nome: '',
       sinopse:'',
       duracao: '',
       dataLancamento: '',
-      idCategoria: '',
-      idClassificacao: '',
-      idTipo: '',
-      idVeiculo: ''
+      idCategoria: 0,
+      idClassificacao: 0,
+      idTipo: 0,
+      idVeiculo: 0,
+      mostraCadastro: false,
+      mostraLista: false
     };
+  }
+
+  componentDidMount() {
+    this.listaVeiculos();
+  }
+
+  atualizaNome = (event) => {
+    this.setState({nome: event.target.value });
+  }
+
+  atualizaSinopse = (event) => {
+    this.setState({ sinopse: event.target.value });
+  }
+
+  atualizaDuracao = (event) => {
+    this.setState({ duracao: event.target.value });
+  }
+
+  atualizaDataLancamento = (event) => {
+    this.setState({ dataLancamento: event.target.value });    
+  }
+
+  atualizaidCategoriaNavigation = (event) => {
+    this.setState({ idCategoria: event.target.value });
+  }
+
+  atualizaidClassificacaoNavigation = (event) => {
+    this.setState({ idClassificacao: event.target.value });
+  }
+
+  atualizaidTipoNavigation = (event) => {
+    this.setState({ idTipo: event.target.value });
+  }
+
+  atualizaidVeiculoNavigation = (event) =>{
+    this.setState({idVeiculo: event.target.value});
+  }
+
+  abreCadastro = (event) => {
+    this.setState({
+      mostraCadastro: true,
+      mostraLista: false
+    });
+  }
+
+  listaVeiculos() {
+    Axios.get('http://localhost:5000/api/veiculos', {
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }})
+    .then(response => {
+      if(response.status === 200){ 
+        this.setState({ listaVeiculos: response.data });
+      }
+    });
+  }
+
+  listaLancamentos = (event) =>{
+    event.preventDefault();
+    Axios.get('http://localhost:5000/api/lancamentos', {
+      headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }})
+    .then(resposta => {
+      if(resposta.status === 200){ 
+        let response = resposta.data;
+        this.setState({
+          lista: response,
+          mostraCadastro: false,
+          mostraLista: true
+        })
+      }else{
+        this.setState({ erro: "Oops! Tem erro.."})
+      }
+    })
+    .catch(erro =>{
+      this.setState({ erro: "Oops! Tem erro.."})
+    });
+  }
+
+  mudaParaTelaAdministrador = (event) =>{
+    this.props.history.push('/administrador');
+  }
+
+  cadastraInformacoes = (event) =>{
+    event.preventDefault();
+
+    Axios.post('http://localhost:5000/api/lancamentos', {
+      nome: this.state.nome,
+    })
+    .then(this.listaAtualizada())
+    .catch(error => this.setState({ erro: "Oops! Tem erro.."})) 
   }
 
   logout = (event) =>{
@@ -29,111 +130,19 @@ class Administrador extends Component {
     this.props.history.push('/');
   }
 
-  
-
-  listaCategoria = (event) =>{
-    
-  }
-
-  listaLancamentos = (event) =>{
-    Axios.get('http://localhost:5000/api/categorias')
-    .then(data => {
-      this.setState({lista: data.nome})
-    })
-    .catch(erro =>{
-      console.log(erro);
-    });
-  }
-
-  listaTipo = (event) =>{
-    this.props.history.push('/admTipo');
-  }
-
-  listaUsuarios = (event) =>{
-    this.props.history.push('/admUsuario');
-  }
-
-  listaVeiculo = (event) =>{
-    this.props.history.push('/admVeiculo');
-  }
-
-  cadastraInformacoes = (event) =>{
-    event.preventDefault();
-    console.log.(this.state.nome);
-    Axios.post('http://localhost:5000/api/lancamentos', {
-      nome: this.state.nome,
-    })
-    .then(this.listaAtualizada())
-    .catch(error => console.log(error)) 
-  }
-
-  componentDidMount() {
-    Axios.get('http://localhost:5000/api/lancamentos')
-      .then(data => {
-        this.setState({ lista: data.data });
-      })
-      .catch(erro => {
-        console.log(erro);
-      });
-  }
-
   render() {
     return (
       <div>
         <Header funcao={this.logout}/>
         <main className="conteudoPrincipal">
           <section className="conteudoPrincipalAdministrador">
+            <h2>Lançamento</h2>
             <div className="containerAdmin" >
-              <select id="option__acessolivre">
-                <option value="Selecione">Selecione</option>
-                <option value="Usuários" onClick={this.listaUsuarios} >Usuários</option>
-                <option value="Tipo" onClick={this.listaTipo}>Tipo</option>
-                <option value="Categoria" onClick={this.listaCategoria} >Categoria</option>
-                <option value="Veículo" onClick={this.listaVeiculo}>Veículo</option>
-                <option value="Lancamentos" onClick={this.listaLancamentos}>Lançamentos</option>
-              </select>
-              <button className="conteudoPrincipal-btn">Cadastrar</button>
-              <button className="conteudoPrincipal-btn">Listar</button>
+              <button className="conteudoPrincipal-btn" onClick={this.abreCadastro}>Cadastrar</button>
+              <button className="conteudoPrincipal-btn" onClick={this.listaLancamentos}>Listar</button>
+              <button className="conteudoPrincipal-btn" onClick={this.mudaParaTelaAdministrador}>Voltar</button>
             </div>
           </section>
-          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
-          <form action=""></form>
-
-
-          {/* tabela Usuario*/}
-          <table id="tabela-lista">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Nome</th>
-                <th>Email</th>
-                <th>Senha</th>
-                <th>Celular</th>
-                <th>Endereço</th>
-                <th>Perfil</th>
-              </tr>
-            </thead>
-            <tbody id="tabela-lista-corpo">
-              {
-                this.state.lista.map(element => {
-                  return (
-                    <tr>
-                      <td>{element.idUsuario}</td>
-                      <td>{element.nome}</td>
-                      <td>{element.email}</td>
-                      <td>{element.senha}</td>
-                      <td>{element.celular}</td>
-                      <td>{element.endereco}</td>
-                      <td>{element.idPerfilNavigation.nome}</td>
-
-                    </tr>
-                  )
-                })
-              }
-            </tbody>
-          </table>
-
-         
 
           {/* tabela Lancamento*/}
           <table id="tabela-lista">
@@ -159,11 +168,11 @@ class Administrador extends Component {
                       <td>{element.nome}</td>
                       <td>{element.sinopse}</td>
                       <td>{element.duracao}</td>
-                      <td>{element.datalancamento}</td>
-                      <td>{element.idVeiculoNavigation.nome}</td>
-                      <td>{element.idCategoriaNavigation.nome}</td>
-                      <td>{element.idClassificacaoNavigation.nome}</td>
-                      <td>{element.idTipoNavigation.nome}</td>
+                      <td>{element.dataLancamento}</td>
+                      <td>{element.idVeiculo}</td>
+                      <td>{element.idCategoria}</td>
+                      <td>{element.idClassificacao}</td>
+                      <td>{element.idTipo}</td>
                     </tr>
                   )
                 })
@@ -171,7 +180,7 @@ class Administrador extends Component {
             </tbody>
           </table>
 
-          {/* Formulário para cadastrar Lançamento */}
+          <div className="container">
           <input type="text"
             placeholder="Digite o nome do Lançamento"
             onChange={this.atualizaNome}
@@ -193,31 +202,31 @@ class Administrador extends Component {
             value={this.state.datalancamento}
           />
 
-          <select id="option" onChange={this.atualizaidVeiculoNavigation}>
+          <select id="option" onChange={this.atualizaidVeiculoNavigation} value={this.state.idVeiculo}>
             <option value="0" disabled >Veículo do Lançamento</option>
-            {this.state.lista.map(element => {
-              return (<option value={element.idVeiculo} key={element.idVeiculo} > {element.idVeiculoNavigation.nome} </option>)
+            {this.state.listaVeiculos.map(element => {
+              return (<option key={element.idVeiculo} value={element.idVeiculo}> {element.nome} </option>)
             })}
           </select>
 
-          <select id="option" onChange={this.atualizaidCategoriaNavigation}>
+          <select id="option" onChange={this.atualizaidCategoriaNavigation} value={this.state.idCategoria}>
             <option value="0" disabled >Categoria do Lançamento</option>
-            {this.state.lista.map(element => {
-              return (<option value={element.idCategoria} key={element.idCategoria} > {element.idCategoriaNavigation.nome} </option>)
+            {this.state.listaCategorias.map(element => {
+              return (<option value={element.idCategoria} key={element.idCategoria} > {element.idCategoria} </option>)
             })}
           </select>
 
-          <select id="option" onChange={this.atualizaidClassificacaoNavigation}>
+          <select id="option" onChange={this.atualizaidClassificacaoNavigation} value={this.state.idClassificacao}>
             <option value="0" disabled >Classificação do Lançamento</option>
-            {this.state.lista.map(element => {
-              return (<option value={element.idClassificacao} key={element.idClassificacao} > {element.idClassificacaoNavigation.nome} </option>)
+            {this.state.listaClassificacoes.map(element => {
+              return (<option value={element.idClassificacao} key={element.idClassificacao} > {element.idClassificacao} </option>)
             })}
           </select>
 
-          <select id="option" onChange={this.atualizaidTipoNavigation}>
+          <select id="option" onChange={this.atualizaidTipoNavigation} value={this.state.idTipo}>
             <option value="0" disabled >Tipo do Lançamento</option>
-            {this.state.lista.map(element => {
-              return (<option value={element.idTipo} key={element.idTipo} > {element.idTipoNavigation.nome} </option>)
+            {this.state.listaTipos.map(element => {
+              return (<option value={element.idTipo} key={element.idTipo} > {element.idTipo} </option>)
             })}
           </select>
           
@@ -234,6 +243,9 @@ class Administrador extends Component {
           >
             Cadastrar
           </button>
+          </div>
+
+          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
 
         </main>
         <Footer />
@@ -242,4 +254,4 @@ class Administrador extends Component {
   };
 }
 
-export default Administrador;
+export default AdmLancamento;

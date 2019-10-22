@@ -7,58 +7,65 @@ import Axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
-class Administrador extends Component {
+class AdmTipo extends Component {
   constructor() {
     super();
     this.state = {
       lista: [],
+      nome: ''
     };
   }
 
-  listaCategoria = (event) =>{
-    Axios.get('http://localhost:5000/api/categorias')
-    .then(data => {
-      this.setState({lista: data.nome})
-    })
-    .catch(erro =>{
-      console.log(erro);
-    });
-  }
-
-  listaLancamentos = (event) =>{
-    this.props.history.push('/admLancamento');
+  atualizaNome = (event) => {
+    this.setState({ nome: event.target.value });
   }
 
   listaTipo = (event) =>{
-    this.props.history.push('/admTipo');
+    event.preventDefault();
+    Axios.get('http://localhost:5000/api/tipos', {
+      headers:{
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }
+    })
+    .then(resposta => {
+      if(resposta.status === 200){
+        let response = resposta.data;
+        this.setState({
+          lista: response
+        })
+      }else{
+        this.setState({erro: "Oops!"})
+      }
+    })
+    .catch(erro =>{
+      this.setState({erro: "Oops!"})
+    });
   }
 
-  listaUsuarios = (event) =>{
-    this.props.history.push('/admUsuario');
-  }
-
-  listaVeiculo = (event) =>{
-    this.props.history.push('/admVeiculo');
+  mudaParaTelaAdministrador = (event) =>{
+    this.props.history.push('/administrador');
   }
 
   cadastraInformacoes = (event) =>{
     event.preventDefault();
-    console.log.(this.state.nome);
     Axios.post('http://localhost:5000/api/tipos', {
       nome: this.state.nome,
+    }, 
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }
     })
-    .then(this.listaAtualizada())
-    .catch(error => console.log(error)) 
-  }
-
-  componentDidMount() {
-    Axios.get('http://localhost:5000/api/tipos')
-      .then(data => {
-        this.setState({ lista: data.data });
-      })
-      .catch(erro => {
-        console.log(erro);
-      });
+    .then(response => {
+      if (response.status === 200) {
+        this.setState({ nome: '' });
+      } else {
+        this.setState({erro: "Oops!"})
+      }
+    })
+    .catch(error => this.setState({erro: "Oops!"})) 
   }
 
   logout = (event) =>{
@@ -73,22 +80,13 @@ class Administrador extends Component {
         <Header funcao={this.logout}/>
         <main className="conteudoPrincipal">
           <section className="conteudoPrincipalAdministrador">
+            <h2>Tipo</h2>
             <div className="containerAdmin" >
-              <select id="option__acessolivre">
-              <option value="Selecione">Selecione</option>
-                <option value="Usuários" onClick={this.listaUsuarios} >Usuários</option>
-                <option value="Tipo" onClick={this.listaTipo}>Tipo</option>
-                <option value="Categoria" onClick={this.listaCategoria} >Categoria</option>
-                <option value="Veículo" onClick={this.listaVeiculo}>Veículo</option>
-                <option value="Lancamentos" onClick={this.listaLancamentos}>Lançamentos</option>
-              </select>
-              <button className="conteudoPrincipal-btn">Cadastrar</button>
-              <button className="conteudoPrincipal-btn">Listar</button>
+              <button className="conteudoPrincipal-btn" onClick={this.abreCadastro}>Cadastrar</button>
+              <button className="conteudoPrincipal-btn" onClick={this.listaTipo}>Listar</button>
+              <button className="conteudoPrincipal-btn" onClick={this.mudaParaTelaAdministrador}>Voltar</button>
             </div>
           </section>
-          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
-          <form action=""></form>
-
 
           {/* tabela Tipo*/}
           <table id="tabela-lista">
@@ -102,7 +100,7 @@ class Administrador extends Component {
               {
                 this.state.lista.map(element => {
                   return (
-                    <tr>
+                    <tr key={element.idTipo}>
                       <td>{element.idTipo}</td>
                       <td>{element.nome}</td>
                     </tr>
@@ -112,7 +110,7 @@ class Administrador extends Component {
             </tbody>
           </table>
 
-          {/* Formulário para cadastrar Tipo */}
+          <div className="container">
           <input type="text"
             placeholder="Digite o tipo"
             onChange={this.atualizaNome}
@@ -131,11 +129,9 @@ class Administrador extends Component {
           >
             Cadastrar
           </button>
+          </div>
 
-
-
-          
-
+          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
         </main>
         <Footer />
       </div>
@@ -143,4 +139,4 @@ class Administrador extends Component {
   };
 }
 
-export default Administrador;
+export default AdmTipo;

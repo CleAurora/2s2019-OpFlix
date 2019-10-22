@@ -7,25 +7,117 @@ import Axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 
-class Administrador extends Component {
+class AdmUsuario extends Component {
+
   constructor() {
     super();
     this.state = {
       lista: [],
+      nome: '',
+      email: '',
+      senha: '',
+      celular: '',
+      endereco: '',
+      idPerfil: '',
+      erro: ''
     };
   }
 
-  componentDidMount() {
-    Axios.get('http://localhost:5000/api/usuario')
-      .then(data => {
-        this.setState({ lista: data.data });
+  listaUsuarios = (event) => {
+    event.preventDefault();
+    Axios.get('http://localhost:5000/api/usuarios', {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }
+    })
+      .then(resposta => {
+        if (resposta.status === 200) {
+          let response = resposta.data;
+          this.setState({
+            lista: response
+          });
+        } else {
+
+          console.log("Oops! Tem erro..")
+        }
       })
       .catch(erro => {
         console.log(erro);
       });
   }
 
-  logout = (event) =>{
+  abreCadastro = (event) => {
+
+  }
+
+  atualizaNome = (event) => {
+    this.setState({ nome: event.target.value });
+  }
+
+  atualizaEmail = (event) => {
+    this.setState({ email: event.target.value });
+  }
+
+  atualizaSenha = (event) => {
+    this.setState({ senha: event.target.value });
+  }
+
+  atualizaCelular = (event) => {
+    this.setState({ celular: event.target.value });
+  }
+
+  atualizaEndereco = (event) => {
+    this.setState({ endereco: event.target.value });
+  }
+
+  atualizaPerfil = (event) => {
+    this.setState({ idPerfil: event.target.value });
+  }
+
+  mudaParaTelaAdministrador = (event) => {
+    this.props.history.push('/administrador');
+  }
+
+  cadastraInformacoes = (event) => {
+    event.preventDefault();
+
+    Axios.post('http://localhost:5000/api/usuarios', {
+      nome: this.state.nome,
+      email: this.state.email,
+      senha: this.state.senha,
+      celular: this.state.celular,
+      endereco: this.state.endereco,
+      idPerfil: this.state.idPerfil
+    }, 
+    {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+      }
+    })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({
+            lista: [],
+            nome: '',
+            email: '',
+            senha: '',
+            celular: '',
+            endereco: '',
+            idPerfil: '',
+            erro: ''
+          });
+        } else {
+          this.setState({ erro: "Oops! Algo está errado... " });
+        }
+      })
+      .catch(erro => {
+        this.setState({ erro: "Todos os campos são obrigatórios! " });
+      });
+  }
+
+  logout = (event) => {
     localStorage.removeItem("usuario-opflix");
     localStorage.removeItem("isAdmin-opflix");
     this.props.history.push('/');
@@ -34,24 +126,16 @@ class Administrador extends Component {
   render() {
     return (
       <div>
-        <Header funcao={this.logout}/>
+        <Header funcao={this.logout} />
         <main className="conteudoPrincipal">
           <section className="conteudoPrincipalAdministrador">
-            <div className="containerAdmin" >
-              <select id="option__acessolivre">
-                <option value="Selecione">Selecione</option>
-                <option value="Usuários" onClick={this.listaUsuarios} >Usuários</option>
-                <option value="Tipo" onClick={this.listaTipo}>Tipo</option>
-                <option value="Categoria" onClick={this.listaCategoria} >Categoria</option>
-                <option value="Veículo" onClick={this.listaVeiculo}>Veículo</option>
-                <option value="Lancamentos" onClick={this.listaLancamentos}>Lançamentos</option>
-              </select>
-              <button className="conteudoPrincipal-btn">Cadastrar</button>
-              <button className="conteudoPrincipal-btn">Listar</button>
+            <h2>Usuários</h2>
+            <div className="containerAdmin">
+              <button className="conteudoPrincipal-btn" onClick={this.abreCadastro}>Cadastrar</button>
+              <button className="conteudoPrincipal-btn" onClick={this.listaUsuarios}>Listar</button>
+              <button className="conteudoPrincipal-btn" onClick={this.mudaParaTelaAdministrador}>Voltar</button>
             </div>
           </section>
-          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
-          <form action=""></form>
 
 
           {/* tabela Usuario*/}
@@ -71,15 +155,14 @@ class Administrador extends Component {
               {
                 this.state.lista.map(element => {
                   return (
-                    <tr>
+                    <tr key={element.idUsuario}>
                       <td>{element.idUsuario}</td>
                       <td>{element.nome}</td>
                       <td>{element.email}</td>
                       <td>{element.senha}</td>
                       <td>{element.celular}</td>
                       <td>{element.endereco}</td>
-                      <td>{element.idPerfilNavigation.nome}</td>
-
+                      <td>{element.idPerfil}</td>
                     </tr>
                   )
                 })
@@ -87,50 +170,54 @@ class Administrador extends Component {
             </tbody>
           </table>
 
-          {/* Formulário para cadastrar Usuário */}
-          <input type="text"
-            placeholder="Digite seu nome"
-            onChange={this.atualizaNome}
-            value={this.state.nome}
-          />
-          <input type="text"
-            placeholder="Digite seu e-mail"
-            onChange={this.atualizaEmail}
-            value={this.state.email}
-          />
-          <input type="password"
-            placeholder="Digite sua senha"
-            onChange={this.atualizaSenha}
-            value={this.state.senha}
-          />
-          <input type="text"
-            placeholder="Digite seu celular"
-            onChange={this.atualizaCelular}
-            value={this.state.celular}
-          />
-          <input type="text"
-            placeholder="Digite seu endereço"
-            onChange={this.atualizaEndereco}
-            value={this.state.endereco}
-          />
-          <select id="option__acessolivre">
-            <option value="Selecione">Selecione</option>
-            <option value="Administrador">Administrador</option>
-            <option value="Usuário">Usuário</option>
-          </select>
+          <div className="container">
+            <input type="text"
+              placeholder="Digite o nome"
+              onChange={this.atualizaNome}
+              value={this.state.nome}
+            />
+            <input type="text"
+              placeholder="Digite o e-mail"
+              onChange={this.atualizaEmail}
+              value={this.state.email}
+            />
+            <input type="password"
+              placeholder="Digite a senha"
+              onChange={this.atualizaSenha}
+              value={this.state.senha}
+            />
+            <input type="text"
+              placeholder="Digite o celular"
+              onChange={this.atualizaCelular}
+              value={this.state.celular}
+            />
+            <input type="text"
+              placeholder="Digite o endereço"
+              onChange={this.atualizaEndereco}
+              value={this.state.endereco}
+            />
+            <select id="option__acessolivre" onChange={this.atualizaPerfil} value={this.state.idPerfil}>
+              <option value="Selecione">Selecione</option>
+              <option value="1">Administrador</option>
+              <option value="2">Usuário</option>
+            </select>
 
-          <p hidden={this.state.erro === ''}
-            style={{ color: "red", textAlign: "center" }}
-          >
-            {this.state.erro}
-          </p>
+            <p hidden={this.state.erro === ''}
+              style={{ color: "red", textAlign: "center" }}
+            >
+              {this.state.erro}
+            </p>
 
-          <button
-            className="conteudoPrincipal-btn"
-            onClick={this.cadastraInformacoes}
-          >
-            Cadastrar
+            <button
+              className="conteudoPrincipal-btn"
+              onClick={this.cadastraInformacoes}
+            >
+              Cadastrar
           </button>
+          </div>
+
+
+          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
 
         </main>
         <Footer />
@@ -139,4 +226,4 @@ class Administrador extends Component {
   };
 }
 
-export default Administrador;
+export default AdmUsuario;

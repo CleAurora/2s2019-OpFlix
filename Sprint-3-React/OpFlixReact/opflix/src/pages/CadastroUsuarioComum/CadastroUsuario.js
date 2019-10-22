@@ -20,6 +20,7 @@ class CadastroUsuario extends Component {
       erro: ''
     };
   }
+  
   atualizaNome = (event) => {
     this.setState({ nome: event.target.value });
   }

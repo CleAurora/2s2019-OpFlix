@@ -1,10 +1,15 @@
-import { Route, Link, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
+import { Route, BrowserRouter as Router, Switch, Redirect } from 'react-router-dom';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './pages/Home/App';
 import * as serviceWorker from './serviceWorker';
 import Administrador from './pages/Administrador/Administrador';
+import AdmCategoria from './pages/AdmCategoria/AdmCategoria';
+import AdmLancamento from './pages/AdmLancamento/AdmLancamento';
+import AdmTipo from './pages/AdmTipo/AdmTipo';
+import AdmVeiculo from './pages/AdmVeiculo/AdmVeiculo';
+import AdmUsuario from './pages/AdmUsuario/AdmUsuario';
 import CadastroUsuario from './pages/CadastroUsuarioComum/CadastroUsuario';
 import Login from './pages/Login/Login';
 import TelaDetalhesFilmes from './pages/TelaDetalhesFilmes/TelaDetalhesFilmes';
@@ -28,7 +33,7 @@ const PrivateRouting = ({ component: Component }) => (
 const AdminPrivateRouting = ({ component: Component }) => (
     <Route
         render={props =>
-            localStorage.getItem("usuario-opflix") !== null && localStorage.getItem("isAdmin-opflix") == "true" ? (
+            localStorage.getItem("usuario-opflix") !== null && localStorage.getItem("isAdmin-opflix") === "true" ? (
                 <Component {...props} />
             ) : (
                     <Redirect
