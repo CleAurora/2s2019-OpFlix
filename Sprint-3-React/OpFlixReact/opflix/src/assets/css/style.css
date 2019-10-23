@@ -98,11 +98,18 @@ h2{
     color:#fff;
 }
 
+h3{ 
+    text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    color:#fff;
+    background-color: #484445;
+}
+
 .containerAdmin{
     display: flex;
     flex-direction: column;
-    padding: 20px;
     background-color: #fff;
+
 }
 
 .containerAdmin button{

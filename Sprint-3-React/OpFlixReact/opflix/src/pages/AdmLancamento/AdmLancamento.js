@@ -14,19 +14,20 @@ class AdmLancamento extends Component {
     this.state = {
       lista: [],
       listaLancamentos: [],
+      listaLancamentosSelect:[],
       listaVeiculos: [],
       listaCategorias: [],
       listaTipos: [],
       nome: '',
-      sinopse:'',
+      sinopse: '',
       duracao: 0,
-      cadastroDataLancamento: '',
+      dataLancamento: '',
       idCategoria: 0,
       idClassificacao: 0,
       idTipo: 0,
       idVeiculo: 0,
       editaNome: '',
-      editaSinopse:'',
+      editaSinopse: '',
       editaDuracao: 0,
       editaDataLancamento: '',
       editaIdCategoria: 0,
@@ -57,7 +58,7 @@ class AdmLancamento extends Component {
   }
 
   atualizaDataLancamento = (event) => {
-    this.setState({ dataLancamento: event.target.value });    
+    this.setState({ dataLancamento: event.target.value });
   }
 
   atualizaidCategoriaNavigation = (event) => {
@@ -72,40 +73,40 @@ class AdmLancamento extends Component {
     this.setState({ idTipo: event.target.value });
   }
 
-  atualizaidVeiculoNavigation = (event) =>{
-    this.setState({idVeiculo: event.target.value});
+  atualizaidVeiculoNavigation = (event) => {
+    this.setState({ idVeiculo: event.target.value });
   }
 
-  editarNome = (event) =>{
-    this.setState({editanome: event.target.value })
+  editarNome = (event) => {
+    this.setState({ editanome: event.target.value })
   }
 
-  editarSinopse = (event) =>{
-    this.setState({editaSinopse: event.target.value })
+  editarSinopse = (event) => {
+    this.setState({ editaSinopse: event.target.value })
   }
 
-  editarDuracao = (event) =>{
-    this.setState({editaDuracao: event.target.value })
+  editarDuracao = (event) => {
+    this.setState({ editaDuracao: event.target.value })
   }
 
-  editarDataLancamento = (event) =>{
-    this.setState({editaDataLancamento: event.target.value })
+  editarDataLancamento = (event) => {
+    this.setState({ editaDataLancamento: event.target.value })
   }
 
-  editarIdVeiculo = (event) =>{
-    this.setState({editaIdVeiculo: event.target.value })
+  editarIdVeiculo = (event) => {
+    this.setState({ editaIdVeiculo: event.target.value })
   }
 
-  editarIdCategoria = (event) =>{
-    this.setState({editaIdCategoria: event.target.value })
+  editarIdCategoria = (event) => {
+    this.setState({ editaIdCategoria: event.target.value })
   }
 
-  editarIdClassificacao = (event) =>{
-    this.setState({editaIdClassificacao: event.target.value })
+  editarIdClassificacao = (event) => {
+    this.setState({ editaIdClassificacao: event.target.value })
   }
 
-  editarIdTipo = (event) =>{
-    this.setState({editaIdTipo: event.target.value })
+  editarIdTipo = (event) => {
+    this.setState({ editaIdTipo: event.target.value })
   }
 
   editarIdLancamento = (event) => {
@@ -116,11 +117,15 @@ class AdmLancamento extends Component {
     this.buscaDetalheLancamento(event.target.value);
   }
 
-  mudaParaTelaAdministrador = (event) =>{
+  EditarIdLancamento = (event) => {
+    this.setState({ idLancamento: event.target.value });
+  }
+
+  mudaParaTelaAdministrador = (event) => {
     this.props.history.push('/administrador');
   }
 
-  logout = (event) =>{
+  logout = (event) => {
     localStorage.removeItem("usuario-opflix");
     localStorage.removeItem("isAdmin-opflix");
     this.props.history.push('/');
@@ -130,14 +135,15 @@ class AdmLancamento extends Component {
   listaVeiculos() {
     Axios.get('http://localhost:5000/api/veiculos', {
       headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
-      }})
-    .then(response => {
-      if(response.status === 200){ 
-        this.setState({ listaVeiculos: response.data });
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
       }
-    });
+    })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({ listaVeiculos: response.data });
+        }
+      });
   }
 
   listaCategorias() {
@@ -145,125 +151,149 @@ class AdmLancamento extends Component {
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
-      }})
+      }
+    })
       .then(response => {
         if (response.status === 200) {
-          this.setState({listaCategorias: response.data});
-        } 
+          this.setState({ listaCategorias: response.data });
+        }
       });
   }
 
   listaTipos() {
     Axios.get('http://localhost:5000/api/tipos', {
       headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
-      }})
-    .then(response => {
-      if(response.status === 200){ 
-        this.setState({ listaTipos: response.data });
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
       }
-    });
+    })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({ listaTipos: response.data });
+        }
+      });
   }
 
-  listaLancamentos = (event) =>{
+  listaLancamentos = (event) => {
     event.preventDefault();
     Axios.get('http://localhost:5000/api/lancamentos', {
       headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
-      }})
-    .then(resposta => {
-      if(resposta.status === 200){ 
-        let response = resposta.data;
-        this.setState({
-          lista: response
-        })
-      }else{
-        this.setState({ erro: "Oops! Tem erro.."})
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
       }
     })
-    .catch(erro =>{
-      this.setState({ erro: "Oops! Tem erro.."})
-    });
+      .then(resposta => {
+        if (resposta.status === 200) {
+          let response = resposta.data;
+          this.setState({
+            lista: response
+          })
+        } else {
+          this.setState({ erro: "Oops! Tem erro.." })
+        }
+      })
+      .catch(erro => {
+        this.setState({ erro: "Oops! Tem erro.." })
+      });
   }
 
   listaLancamentosSelect() {
     Axios.get('http://localhost:5000/api/lancamentos', {
       headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
-      }})
-    .then(resposta => {
-      if(resposta.status === 200){ 
-        let response = resposta.data;
-        this.setState({
-          listaLancamentos: response
-        })
-      }else{
-        this.setState({ erro: "Oops! Tem erro.."})
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
       }
     })
-    .catch(erro =>{
-      this.setState({ erro: "Oops! Tem erro.."})
-    });
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({listaLancamentosSelect: response.data});
+        } 
+      });
   }
 
   buscaDetalheLancamento = (idLancamento) => {
     Axios.get('http://localhost:5000/api/lancamentos/' + idLancamento, {
       headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
-      }})
-    .then(resposta => {
-      if(resposta.status === 200){ 
-        let response = resposta.data;
-
-        console.log(response);
-
-        /**
-         * 
-         * {
-    "idLancamento": 1,
-    "nome": "O Rei Leão",
-    "sinopse": "O Rei Leão, da Disney, dirigido por Jon Favreau, retrata uma jornada pela savana africana, onde nasce o futuro rei da Pedra do Reino, Simba. O pequeno leão que idolatra seu pai, o rei Mufasa, é fiel ao seu destino de assumir o reinado. Mas nem todos no reino pensam da mesma maneira. Scar, irmão de Mufasa e ex-herdeiro do trono, tem seus próprios planos. A batalha pela Pedra do Reino é repleta de traição, eventos trágicos e drama, o que acaba resultando no exílio de Simba. Com a ajuda de dois novos e inusitados amigos, Simba terá que crescer e voltar para recuperar o que é seu por direito",
-    "duracao": 118,
-    "dataLancamento": "2019-07-18T00:00:00",
-    "idVeiculo": 4,
-    "idCategoria": 9,
-    "idClassificacao": 1,
-    "idTipo": 3
-}
-         */
-
-        this.setState({
-          editaNome: response.nome
-        });
-      }else{
-        this.setState({ erro: "Oops! Tem erro.."})
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
       }
     })
-    .catch(erro =>{
-      this.setState({ erro: "Oops! Tem erro.."})
-    });
+      .then(resposta => {
+        if (resposta.status === 200) {
+          let response = resposta.data;
+
+          console.log(response);
+          this.setState({
+            editaNome: response.nome,
+            editaSinopse: response.sinopse,
+            editaDuracao: response.duracao,
+            editaDataLancamento: response.dataLancamento.slice(0,10),
+            editaIdVeiculo: response.idVeiculo,
+            editaIdCategoria: response.idCategoria,
+            editaIdClassificacao: response.idClassificacao,
+            editaIdTipo: response.idTipo
+          });
+        } else {
+          this.setState({ erro: "Oops! Tem erro.." })
+        }
+      })
+      .catch(erro => {
+        this.setState({ erro: "Oops! Tem erro.." })
+      });
   }
 
-  cadastraInformacoes = (event) =>{
+  cadastraInformacoes = (event) => {
     event.preventDefault();
-
     Axios.post('http://localhost:5000/api/lancamentos', {
       nome: this.state.nome,
-    })
-    .then(this.listaAtualizada())
-    .catch(error => this.setState({ erro: "Oops! Tem erro.."})) 
+      sinopse: this.state.sinopse,
+      duracao: this.state.duracao,
+      dataLancamento: this.state.dataLancamento,
+      idCategoria: this.state.idCategoria,
+      idClassificacao: this.state.idClassificacao,
+      idTipo: this.state.idTipo,
+      idVeiculo: this.state.idVeiculo
+    },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+        }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({
+            lista: [],
+            nome: '',
+            sinopse: '',
+            duracao: 0,
+            DataLancamento: '',
+            idCategoria: 0,
+            idClassificacao: 0,
+            idTipo: 0,
+            idVeiculo: 0
+          });
+        } else {
+          this.setState({ erro: 'Oops!' })
+        }
+      })
+      .catch(error => this.setState({ erro: "Oops! Tem erro.." }))
   }
 
   alteraInformacoes = (event) => {
     event.preventDefault();
 
-    Axios.put('http://localhost:5000/api/Lancamentos/' + this.state.idCategoria,
+    Axios.put('http://localhost:5000/api/lancamentos/' + this.state.idLancamento,
       {
-        nome: this.state.nomeASerAlterado
+        nome: this.state.editaNome,
+        sinopse: this.state.editaSinopse,
+        duracao: this.state.editaDuracao,
+        dataLancamento: this.state.editaDataLancamento,
+        idCategoria: this.state.editaIdCategoria,
+        idClassificacao: this.state.editaIdClassificacao,
+        idTipo: this.state.editaIdTipo,
+        idVeiculo: this.state.editaIdVeiculo
+
       },
       {
         headers: {
@@ -274,10 +304,18 @@ class AdmLancamento extends Component {
       .then(response => {
         if (response.status === 200) {
           this.setState({
-            nomeASerAlterado: '',
-            idCategoria: '0'
+            editaNome: '',
+            editaIdLancamento: '0',
+            editaSinopse: '',
+            editaDuracao: '',
+            editaDataLancamento: '',
+            editaIdCategoria: '',
+            editaIdClassificacao: '',
+            editaIdTipo: '',
+            editaIdVeiculo: '',
+            idLancamento: 0
           });
-          this.listaLancamentos();
+          this.listaLancamentosSelect();
         } else {
           this.setState({ erro: 'Oops!' })
         }
@@ -288,7 +326,7 @@ class AdmLancamento extends Component {
   deletaLancamento = (event) => {
     event.preventDefault();
 
-    Axios.delete('http://localhost:5000/api/lancamentos/' + this.state.idCategoria,
+    Axios.delete('http://localhost:5000/api/lancamentos/' + this.state.idLancamento,
       {
         headers: {
           "Content-Type": "application/json",
@@ -298,22 +336,30 @@ class AdmLancamento extends Component {
       .then(response => {
         if (response.status === 204) {
           this.setState({
-            nomeASerAlterado: '',
-            idCategoria: "0"
+            editaNome: '',
+            editaIdLancamento: '0',
+            editaSinopse: '',
+            editaDuracao: '',
+            editaDataLancamento: '',
+            editaIdCategoria: '',
+            editaIdClassificacao: '',
+            editaIdTipo: '',
+            editaIdVeiculo: '',
+            idLancamento: 0
           });
-          this.listaLancamentos();
+          this.listaLancamentosSelect();
         } else {
           this.setState({ erro: 'Oops!' })
         }
       })
       .catch(error => this.setState({ erro: 'Falha ao tentar deletar lançamento!' }))
-  }  
+  }
 
 
   render() {
     return (
       <div>
-        <Header funcao={this.logout}/>
+        <Header funcao={this.logout} />
         <main className="conteudoPrincipal">
           <section className="conteudoPrincipalAdministrador">
             <h2>Lançamento</h2>
@@ -359,92 +405,143 @@ class AdmLancamento extends Component {
             </tbody>
           </table>
 
+          {/* Formulário para Cadastrar */}
+
+          <h3>Formulário para Cadastrar</h3>
           <div className="container">
-          <input type="text"
-            placeholder="Digite o nome do Lançamento"
-            onChange={this.atualizaNome}
-            value={this.state.nome}
-          />
-          <textarea
-            placeholder="Digite a sinopse do lançamento"
-            onChange={this.atualizaSinopse}
-            value={this.state.sinopse}
-          />
-          <input type="number"
-            placeholder="Digite a duração em minutos"
-            onChange={this.atualizaDuracao}
-            value={this.state.duracao}
-          />
-          <input type="date"
-            placeholder="Digite a Data de Lançamento"
-            onChange={this.atualizaDataLancamento}
-            value={this.state.datalancamento}
-          />
+            <input type="text"
+              placeholder="Digite o nome do Lançamento"
+              onChange={this.atualizaNome}
+              value={this.state.nome}
+            />
+            <textarea
+              placeholder="Digite a sinopse do lançamento"
+              onChange={this.atualizaSinopse}
+              value={this.state.sinopse}
+            />
+            <input type="number"
+              placeholder="Digite a duração em minutos"
+              onChange={this.atualizaDuracao}
+              value={this.state.duracao}
+            />
+            <input type="date"
+              placeholder="Digite a Data de Lançamento"
+              onChange={this.atualizaDataLancamento}
+              value={this.state.datalancamento}
+            />
 
-          <select id="option" onChange={this.atualizaidVeiculoNavigation} value={this.state.idVeiculo}>
-            <option value="0" disabled >Veículo do Lançamento</option>
-            {this.state.listaVeiculos.map(element => {
-              return (<option key={element.idVeiculo} value={element.idVeiculo}> {element.nome} </option>)
-            })}
-          </select>
+            <select id="option" onChange={this.atualizaidVeiculoNavigation} value={this.state.idVeiculo}>
+              <option value="0" disabled >Veículo do Lançamento</option>
+              {this.state.listaVeiculos.map(element => {
+                return (<option key={element.idVeiculo} value={element.idVeiculo}> {element.nome} </option>)
+              })}
+            </select>
 
-          <select id="option" onChange={this.atualizaidCategoriaNavigation} value={this.state.idCategoria}>
-            <option value="0" disabled >Categoria do Lançamento</option>
-            {this.state.listaCategorias.map(element => {
-              return (<option value={element.idCategoria} key={element.idCategoria} > {element.nome} </option>)
-            })}
-          </select>
+            <select id="option" onChange={this.atualizaidCategoriaNavigation} value={this.state.idCategoria}>
+              <option value="0" disabled >Categoria do Lançamento</option>
+              {this.state.listaCategorias.map(element => {
+                return (<option value={element.idCategoria} key={element.idCategoria} > {element.nome} </option>)
+              })}
+            </select>
 
-          <select id="option" onChange={this.atualizaidClassificacaoNavigation} value={this.state.idClassificacao}>
-            <option value="Selecione">Classificação do Lançamento</option>
-            <option value="1">Livre</option>
-            <option value="2">Maior de 16 anos</option>
-            <option value="3">Maior de 18 anos</option>
-          </select>
+            <select id="option" onChange={this.atualizaidClassificacaoNavigation} value={this.state.idClassificacao}>
+              <option value="Selecione">Classificação do Lançamento</option>
+              <option value="1">Livre</option>
+              <option value="2">Maior de 16 anos</option>
+              <option value="3">Maior de 18 anos</option>
+            </select>
 
 
-          <select id="option" onChange={this.atualizaidTipoNavigation} value={this.state.idTipo}>
-            <option value="0" disabled >Tipo do Lançamento</option>
-            {this.state.listaTipos.map(element => {
-              return (<option value={element.idTipo} key={element.idTipo} > {element.nome} </option>)
-            })}
-          </select>
-          
+            <select id="option" onChange={this.atualizaidTipoNavigation} value={this.state.idTipo}>
+              <option value="0" disabled >Tipo do Lançamento</option>
+              {this.state.listaTipos.map(element => {
+                return (<option value={element.idTipo} key={element.idTipo} > {element.nome} </option>)
+              })}
+            </select>
 
-          <p hidden={this.state.erro === ''}
-            style={{ color: "red", textAlign: "center" }}
-          >
-            {this.state.erro}
-          </p>
 
-          <button
-            className="conteudoPrincipal-btn"
-            onClick={this.cadastraInformacoes}
-          >
-            Cadastrar
+            <p hidden={this.state.erro === ''}
+              style={{ color: "red", textAlign: "center" }}
+            >
+              {this.state.erro}
+            </p>
+
+            <button
+              className="conteudoPrincipal-btn"
+              onClick={this.cadastraInformacoes}
+            >
+              Cadastrar
           </button>
 
-          <select id="option" onChange={this.editarIdLancamento} value={this.state.idLancamento}>
-            <option value="0" disabled>Selecione o Lancamento a ser alterado</option>
-            {this.state.listaLancamentos.map(element => {
-              return (
-                <option
-                  value={element.idLancamento}
-                  key={element.idLancamento} > {element.nome} </option>
-              )
-            })}
-          </select>
-            
-          <input type="text"
-            placeholder="Digite o nome do Lançamento"
-            value={this.state.editaNome}
-            onChange={this.editarNome}
-          />
-          <button className="conteudoPrincipal-btn" onClick={this.alteraInformacoes}>Alterar Informações</button>
-          <button className="conteudoPrincipal-btn" onClick={this.deletaCategoria}>Deleta Categoria</button>
+            <h3>Para Deletar e Alterar selecione a opção</h3>
 
-    
+            <select id="option" onChange={this.editarIdLancamento} value={this.state.idLancamento}>
+              <option value="0" disabled>Selecione o Lancamento a ser alterado ou deletado</option>
+              {this.state.listaLancamentosSelect.map(element => {
+                return (
+                  <option
+                    value={element.idLancamento}
+                    key={element.idLancamento} > {element.nome} </option>
+                )
+              })}
+            </select>
 
+            <h3>Formulário para Alterar</h3>
+
+            <input type="text"
+              placeholder="Altera o nome do Lançamento"
+              value={this.state.editaNome}
+              onChange={this.editarNome}
+            />
+
+            <textarea
+              placeholder="Altera a sinopse do lançamento"
+              value={this.state.editaSinopse}
+              onChange={this.editarSinopse}
+            />
+
+            <input type="number"
+              placeholder="Altera a duração em minutos"
+              value={this.state.editaDuracao}
+              onChange={this.editarDuracao}
+            />
+
+            <input type="date"
+              placeholder="Digite a Data de Lançamento"
+              value={this.state.editaDataLancamento}
+              onChange={this.editarDataLancamento}
+            />
+
+            <select id="option" onChange={this.editarIdVeiculo} value={this.state.editaIdVeiculo}>
+              <option value="0" disabled >Veículo do Lançamento</option>
+              {this.state.listaVeiculos.map(element => {
+                return (<option key={element.idVeiculo} value={element.idVeiculo}> {element.nome} </option>)
+              })}
+            </select>
+
+            <select id="option" onChange={this.editarIdCategoria} value={this.state.editaIdCategoria}>
+              <option value="0" disabled >Categoria do Lançamento</option>
+              {this.state.listaCategorias.map(element => {
+                return (<option value={element.idCategoria} key={element.idCategoria} > {element.nome} </option>)
+              })}
+            </select>
+
+            <select id="option" onChange={this.editarIdClassificacao} value={this.state.editaIdClassificacao}>
+              <option value="Selecione">Classificação do Lançamento</option>
+              <option value="1">Livre</option>
+              <option value="2">Maior de 16 anos</option>
+              <option value="3">Maior de 18 anos</option>
+            </select>
+
+            <select id="option" onChange={this.editarIdTipo} value={this.state.editaIdTipo}>
+              <option value="0" disabled >Tipo do Lançamento</option>
+              {this.state.listaTipos.map(element => {
+                return (<option value={element.idTipo} key={element.idTipo} > {element.nome} </option>)
+              })}
+            </select> {/* aqui */}
+
+            <button className="conteudoPrincipal-btn" onClick={this.alteraInformacoes}>Alterar Informações</button>
+            <button className="conteudoPrincipal-btn" onClick={this.deletaLancamento}>Deletar Lançamento</button>
 
           </div>
 

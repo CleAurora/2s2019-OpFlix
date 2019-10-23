@@ -207,8 +207,10 @@ class AdmCategoria extends Component {
               Cadastrar
             </button>
 
+            <h3>Para Deletar e Alterar selecione a opção</h3>
+
             <select id="option" onChange={this.atualizaIdCategoria} value={this.state.idCategoria}>
-              <option value="0" disabled >Selecione a categoria a ser alterada</option>
+              <option value="0" disabled >Selecione a categoria a ser alterada ou deletada</option>
               {this.state.listaCategoriasSelect.map(element => {
                 return (
                   <option
@@ -224,7 +226,7 @@ class AdmCategoria extends Component {
               onChange={this.atualizaNomeASerAlterado}
             />
             <button className="conteudoPrincipal-btn" onClick={this.alteraInformacoes}>Alterar Informações</button>
-            <button className="conteudoPrincipal-btn" onClick={this.deletaCategoria}>Deleta Categoria</button>
+            <button className="conteudoPrincipal-btn" onClick={this.deletaCategoria}>Deletar Categoria</button>
 
             <p hidden={this.state.erro === ''}
               style={{ color: "red", textAlign: "center" }}
