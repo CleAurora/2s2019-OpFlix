@@ -13,7 +13,9 @@ class AdmCategoria extends Component {
     this.state = {
       lista: [],
       listaCategoriasSelect: [],
-      nome: ''
+      nome: '',
+      nomeASerAlterado: '',
+      idCategoria: '0'
     };
   }
 
@@ -25,16 +27,12 @@ class AdmCategoria extends Component {
     this.setState({ nome: event.target.value });
   }
 
-  atualizaNomeBuscar = (event) => {
-    this.setState({ nome: event.target.value });
+  atualizaNomeASerAlterado = (event) => {
+    this.setState({ nomeASerAlterado: event.target.value });
   }
 
-  atualizaNomeAlterar = (event) => {
-    this.setState({ nome: event.target.value });
-  }
-
-  atualizaNomeDeletar = (event) => {
-    this.setState({ nome: event.target.value });
+  atualizaIdCategoria = (event) => {
+    this.setState({ idCategoria: event.target.value });
   }
 
   mudaParaTelaAdministrador = (event) => {
@@ -85,30 +83,6 @@ class AdmCategoria extends Component {
       });
   }
 
-  listaCategoriaPorId = (event) => {
-    event.preventDefault();
-
-    Axios.get('http://localhost:5000/api/categorias/{this.state.id}', {
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
-      }
-    })
-      .then(resposta => {
-        if (resposta.status === 200) {
-          let response = resposta.data;
-          this.setState({
-            lista: response
-          })
-        } else {
-          this.setState({ erro: "Oops! Tem erro.." })
-        }
-      })
-      .catch(erro => {
-        this.setState({ erro: "Oops! Tem erro.." })
-      });
-  }
-
   cadastraInformacoes = (event) => {
     event.preventDefault();
     Axios.post('http://localhost:5000/api/categorias', {
@@ -133,15 +107,12 @@ class AdmCategoria extends Component {
       .catch(error => this.setState({ erro: 'Falha ao tentar cadastrar categoria!' }))
   }
 
-  AlteraInformacoes = (event) => {
+  alteraInformacoes = (event) => {
     event.preventDefault();
-    const categoriaASerAlterada = {
-      nome: this.state.nome
-    }
 
-    Axios.put('http://localhost:5000/api/categorias/' + this.state.id,
+    Axios.put('http://localhost:5000/api/categorias/' + this.state.idCategoria,
       {
-        nome: this.state.nome
+        nome: this.state.nomeASerAlterado
       },
       {
         headers: {
@@ -152,32 +123,21 @@ class AdmCategoria extends Component {
       .then(response => {
         if (response.status === 200) {
           this.setState({
-            lista: [],
-            nome: ''
+            nomeASerAlterado: '',
+            idCategoria: '0'
           });
+          this.listaCategoriasSelect();
         } else {
           this.setState({ erro: 'Oops!' })
         }
       })
       .catch(error => this.setState({ erro: 'Falha ao tentar atualizar categoria!' }))
   }
-  //   update(e) {
-  //     e.preventDefault();
-  //     const employee = {
-  //         name: this.state.name,
-  //         age: this.state.age,
-  //         salary: this.state.salary,
-  //     }
-  //     axios.put('http://dummy.restapiexample.com/api/v1/update/{this.state.id}', employee)
-  //     .then(res => console.log(res.data));
-  // }
 
-  DeletaCategoria = (event) => {
+  deletaCategoria = (event) => {
     event.preventDefault();
-    const categoriaASerDeletada = {
-      nome: this.state.nome
-    }
-    Axios.delete('http://localhost:5000/api/categorias/{this.state.id}', categoriaASerDeletada,
+
+    Axios.delete('http://localhost:5000/api/categorias/' + this.state.idCategoria,
       {
         headers: {
           "Content-Type": "application/json",
@@ -185,24 +145,18 @@ class AdmCategoria extends Component {
         }
       })
       .then(response => {
-        if (response.status === 200) {
+        if (response.status === 204) {
           this.setState({
-            lista: [],
-            nome: ''
+            nomeASerAlterado: '',
+            idCategoria: "0"
           });
+          this.listaCategoriasSelect();
         } else {
           this.setState({ erro: 'Oops!' })
         }
       })
-      .catch(error => this.setState({ erro: 'Falha ao tentar atualizar categoria!' }))
+      .catch(error => this.setState({ erro: 'Falha ao tentar deletar categoria!' }))
   }
-  // delete(e) {
-  //   e.preventDefault();
-  //   axios.delete('http://dummy.restapiexample.com/api/v1/delete/{this.state.id}')
-  //   .then(res => console.log(res.data));
-  // }
-
-
 
   render() {
     return (
@@ -246,12 +200,6 @@ class AdmCategoria extends Component {
               value={this.state.nome}
             />
 
-            <p hidden={this.state.erro === ''}
-              style={{ color: "red", textAlign: "center" }}
-            >
-              {this.state.erro}
-            </p>
-
             <button
               className="conteudoPrincipal-btn"
               onClick={this.cadastraInformacoes}
@@ -259,8 +207,8 @@ class AdmCategoria extends Component {
               Cadastrar
             </button>
 
-            <select id="option" onChange={this.atualizaidCategoriaNavigation} value={this.state.idCategoria}>
-              <option value="0" disabled >Categoria do Lançamento</option>
+            <select id="option" onChange={this.atualizaIdCategoria} value={this.state.idCategoria}>
+              <option value="0" disabled >Selecione a categoria a ser alterada</option>
               {this.state.listaCategoriasSelect.map(element => {
                 return (
                   <option
@@ -272,11 +220,21 @@ class AdmCategoria extends Component {
             
             <input type="text"
               placeholder="Digite a Categoria a ser alterada"
-              onChange={this.atualizaNome}
+              value={this.state.nomeASerAlterado}
+              onChange={this.atualizaNomeASerAlterado}
             />
-            <button className="conteudoPrincipal-btn" onClick={this.AlteraInformacoes}>Alterar Informações</button>
-            <button className="conteudoPrincipal-btn" onClick={this.DeletaCategoria}>Deleta Categoria</button>
+            <button className="conteudoPrincipal-btn" onClick={this.alteraInformacoes}>Alterar Informações</button>
+            <button className="conteudoPrincipal-btn" onClick={this.deletaCategoria}>Deleta Categoria</button>
+
+            <p hidden={this.state.erro === ''}
+              style={{ color: "red", textAlign: "center" }}
+            >
+              {this.state.erro}
+            </p>
           </div>
+
+
+          
 
           <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
 

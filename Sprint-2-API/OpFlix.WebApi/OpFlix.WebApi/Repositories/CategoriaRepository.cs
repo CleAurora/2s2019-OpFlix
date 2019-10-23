@@ -39,7 +39,6 @@ namespace OpFlix.WebApi.Repositories
             
         }
 
-
         /// <summary>
         /// Cadastra Categoria
         /// </summary>
@@ -51,6 +50,21 @@ namespace OpFlix.WebApi.Repositories
                 ctx.Categorias.Add(categoria);
                 ctx.SaveChanges();
                 return categoria;
+            }
+        }
+
+        /// <summary>
+        /// Deleta Categoria
+        /// </summary>
+        /// <param name="id">IdCategoria</param>
+        public void Deletar(int id)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                Categorias CategoriaBuscada = ctx.Categorias.FirstOrDefault(item => item.IdCategoria == id);
+
+                ctx.Categorias.Remove(CategoriaBuscada);
+                ctx.SaveChanges();
             }
         }
 

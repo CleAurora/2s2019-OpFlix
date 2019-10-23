@@ -13,6 +13,6 @@ namespace OpFlix.WebApi.Interfaces
 
         void Atualizar(Categorias categoria);
 
-
+        void Deletar(int id);
     }
 }
