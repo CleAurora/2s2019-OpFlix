@@ -13,14 +13,27 @@ class AdmUsuario extends Component {
     super();
     this.state = {
       lista: [],
+      listaUsuarios: [],
+      listaUsuariosSelect: [],
       nome: '',
       email: '',
       senha: '',
       celular: '',
       endereco: '',
       idPerfil: '',
-      erro: ''
+      erro: '',
+      editaNome: '',
+      editaEmail: '',
+      editaSenha: '',
+      editaCelular: '',
+      editaEndereco: '',
+      editaIdPerfil: '',
+      idUsuario: '',
     };
+  }
+
+  componentDidMount(){
+    this.listaUsuariosSelect();
   }
 
   listaUsuarios = (event) => {
@@ -45,10 +58,6 @@ class AdmUsuario extends Component {
       .catch(erro => {
         console.log(erro);
       });
-  }
-
-  abreCadastro = (event) => {
-
   }
 
   atualizaNome = (event) => {

@@ -20,7 +20,7 @@ class AdmLancamento extends Component {
       listaTipos: [],
       nome: '',
       sinopse: '',
-      duracao: 0,
+      duracao: '',
       dataLancamento: '',
       idCategoria: 0,
       idClassificacao: 0,
@@ -28,7 +28,7 @@ class AdmLancamento extends Component {
       idVeiculo: 0,
       editaNome: '',
       editaSinopse: '',
-      editaDuracao: 0,
+      editaDuracao: '',
       editaDataLancamento: '',
       editaIdCategoria: 0,
       editaIdClassificacao: 0,
@@ -78,7 +78,7 @@ class AdmLancamento extends Component {
   }
 
   editarNome = (event) => {
-    this.setState({ editanome: event.target.value })
+    this.setState({ editaNome: event.target.value })
   }
 
   editarSinopse = (event) => {
@@ -110,10 +110,7 @@ class AdmLancamento extends Component {
   }
 
   editarIdLancamento = (event) => {
-    console.log(this.state.idLancamento);
-    console.log("vai ser besta", event.target.value);
     this.setState({ idLancamento: event.target.value });
-    console.log(this.state.idLancamento);
     this.buscaDetalheLancamento(event.target.value);
   }
 
@@ -186,7 +183,8 @@ class AdmLancamento extends Component {
         if (resposta.status === 200) {
           let response = resposta.data;
           this.setState({
-            lista: response
+            lista: response,
+            erro: ''
           })
         } else {
           this.setState({ erro: "Oops! Tem erro.." })
@@ -231,7 +229,8 @@ class AdmLancamento extends Component {
             editaIdVeiculo: response.idVeiculo,
             editaIdCategoria: response.idCategoria,
             editaIdClassificacao: response.idClassificacao,
-            editaIdTipo: response.idTipo
+            editaIdTipo: response.idTipo,
+            erro: ''
           });
         } else {
           this.setState({ erro: "Oops! Tem erro.." })
@@ -266,12 +265,13 @@ class AdmLancamento extends Component {
             lista: [],
             nome: '',
             sinopse: '',
-            duracao: 0,
-            DataLancamento: '',
+            duracao: '',
+            dataLancamento: '',
             idCategoria: 0,
             idClassificacao: 0,
             idTipo: 0,
-            idVeiculo: 0
+            idVeiculo: 0,
+            erro: ''
           });
         } else {
           this.setState({ erro: 'Oops!' })
@@ -293,7 +293,6 @@ class AdmLancamento extends Component {
         idClassificacao: this.state.editaIdClassificacao,
         idTipo: this.state.editaIdTipo,
         idVeiculo: this.state.editaIdVeiculo
-
       },
       {
         headers: {
@@ -305,15 +304,15 @@ class AdmLancamento extends Component {
         if (response.status === 200) {
           this.setState({
             editaNome: '',
-            editaIdLancamento: '0',
             editaSinopse: '',
             editaDuracao: '',
             editaDataLancamento: '',
-            editaIdCategoria: '',
-            editaIdClassificacao: '',
-            editaIdTipo: '',
-            editaIdVeiculo: '',
-            idLancamento: 0
+            editaIdCategoria: 0,
+            editaIdClassificacao: 0,
+            editaIdTipo: 0,
+            editaIdVeiculo: 0,
+            idLancamento: 0,
+            erro: ''
           });
           this.listaLancamentosSelect();
         } else {
@@ -337,15 +336,15 @@ class AdmLancamento extends Component {
         if (response.status === 204) {
           this.setState({
             editaNome: '',
-            editaIdLancamento: '0',
             editaSinopse: '',
             editaDuracao: '',
             editaDataLancamento: '',
-            editaIdCategoria: '',
-            editaIdClassificacao: '',
-            editaIdTipo: '',
-            editaIdVeiculo: '',
-            idLancamento: 0
+            editaIdCategoria: 0,
+            editaIdClassificacao: 0,
+            editaIdTipo: 0,
+            editaIdVeiculo: 0,
+            idLancamento: 0,
+            erro: ''
           });
           this.listaLancamentosSelect();
         } else {
@@ -421,6 +420,7 @@ class AdmLancamento extends Component {
             />
             <input type="number"
               placeholder="Digite a duração em minutos"
+              min="1"
               onChange={this.atualizaDuracao}
               value={this.state.duracao}
             />
@@ -501,6 +501,7 @@ class AdmLancamento extends Component {
             />
 
             <input type="number"
+              min="1"
               placeholder="Altera a duração em minutos"
               value={this.state.editaDuracao}
               onChange={this.editarDuracao}

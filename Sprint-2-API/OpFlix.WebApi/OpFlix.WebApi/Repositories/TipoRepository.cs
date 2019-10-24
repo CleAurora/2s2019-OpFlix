@@ -64,5 +64,20 @@ namespace OpFlix.WebApi.Repositories
                 return ctx.Tipos.ToList();
             }
         }
+
+        /// <summary>
+        /// Deleta Tipo
+        /// </summary>
+        /// <param name="id">IdTipo</param>
+        public void Deletar(int id)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                Tipos TipoBuscado = ctx.Tipos.FirstOrDefault(item => item.IdTipo == id);
+
+                ctx.Tipos.Remove(TipoBuscado);
+                ctx.SaveChanges();
+            }
+        }
     }
 }

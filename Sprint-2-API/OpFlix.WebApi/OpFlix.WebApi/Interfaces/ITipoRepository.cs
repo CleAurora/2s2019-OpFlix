@@ -13,5 +13,6 @@ namespace OpFlix.WebApi.Interfaces
 
         void Atualizar(Tipos tipo);
 
+        void Deletar(int id);
     }
 }

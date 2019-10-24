@@ -95,8 +95,8 @@ namespace OpFlix.WebApi.Controllers
                 if (TipoBuscado == null)
                     return NotFound();
 
-                TipoBuscado.IdTipo = TipoBuscado.IdTipo;
-                TipoRepository.Atualizar(tipo);
+                TipoBuscado.Nome = tipo.Nome;
+                TipoRepository.Atualizar(TipoBuscado);
                 return Ok();
             }
             catch (Exception ex)
@@ -105,5 +105,23 @@ namespace OpFlix.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Chama método que deleta Tipo que já estava cadastrada
+        /// </summary>
+        /// <param name="id">idTipo</param>
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Deletar(int id)
+        {
+            try
+            {
+                TipoRepository.Deletar(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Oops! Tem erro aqui... " + ex.Message });
+            }
+        }
     }
 }

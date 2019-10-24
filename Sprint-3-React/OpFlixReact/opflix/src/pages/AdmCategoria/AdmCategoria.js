@@ -148,14 +148,15 @@ class AdmCategoria extends Component {
         if (response.status === 204) {
           this.setState({
             nomeASerAlterado: '',
-            idCategoria: "0"
+            idCategoria: "0",
+            erro: ''
           });
           this.listaCategoriasSelect();
         } else {
-          this.setState({ erro: 'Oops!' })
+          this.setState({ erro: 'Falha ao tentar deletar categoria!' })
         }
       })
-      .catch(error => this.setState({ erro: 'Falha ao tentar deletar categoria!' }))
+      .catch(error => this.setState({ erro: 'Não é possível deletar uma categoria que possui lançamento associado!' }))
   }
 
   render() {
