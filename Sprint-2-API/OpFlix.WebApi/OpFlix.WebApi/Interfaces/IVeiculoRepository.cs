@@ -13,5 +13,7 @@ namespace OpFlix.WebApi.Interfaces
 
         void Atualizar(Veiculos veiculo);
 
+        void Deletar(int veiculo);
+
     }
 }

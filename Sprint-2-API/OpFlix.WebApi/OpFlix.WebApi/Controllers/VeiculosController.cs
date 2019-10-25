@@ -105,6 +105,25 @@ namespace OpFlix.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Chama método que deleta Veiculo que já estava cadastrada
+        /// </summary>
+        /// <param name="id">idVeiculo</param>
+        [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Deletar(int id)
+        {
+            try
+            {
+                VeiculoRepository.Deletar(id);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Oops! Tem erro aqui... " + ex.Message });
+            }
+        }
+
 
     }
 }

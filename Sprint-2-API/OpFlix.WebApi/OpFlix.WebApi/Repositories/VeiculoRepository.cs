@@ -62,5 +62,22 @@ namespace OpFlix.WebApi.Repositories
                 return ctx.Veiculos.ToList();
             }
         }
+
+        /// <summary>
+        /// Deleta Veículo
+        /// </summary>
+        /// <param name="id">IdVeiculo</param>
+        public void Deletar(int id)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                Veiculos VeiculoBuscado = ctx.Veiculos.FirstOrDefault(item => item.IdVeiculo == id);
+
+                ctx.Veiculos.Remove(VeiculoBuscado);
+                ctx.SaveChanges();
+            }
+        }
+
+
     }
 }

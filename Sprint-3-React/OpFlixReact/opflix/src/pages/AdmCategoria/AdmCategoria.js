@@ -220,6 +220,9 @@ class AdmCategoria extends Component {
                 )
               })}
             </select>
+
+            <h3>Formulário para Alterar a Categoria selecionada </h3>
+
             
             <input type="text"
               placeholder="Digite a Categoria a ser alterada"

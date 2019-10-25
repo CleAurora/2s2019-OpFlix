@@ -114,9 +114,9 @@ class AdmLancamento extends Component {
     this.buscaDetalheLancamento(event.target.value);
   }
 
-  EditarIdLancamento = (event) => {
-    this.setState({ idLancamento: event.target.value });
-  }
+  // EditarIdLancamento = (event) => {
+  //   this.setState({ idLancamento: event.target.value });
+  // }
 
   mudaParaTelaAdministrador = (event) => {
     this.props.history.push('/administrador');
@@ -486,7 +486,7 @@ class AdmLancamento extends Component {
               })}
             </select>
 
-            <h3>Formulário para Alterar</h3>
+            <h3>Formulário para Alterar o Lançamento selecionado </h3>
 
             <input type="text"
               placeholder="Altera o nome do Lançamento"
@@ -539,7 +539,7 @@ class AdmLancamento extends Component {
               {this.state.listaTipos.map(element => {
                 return (<option value={element.idTipo} key={element.idTipo} > {element.nome} </option>)
               })}
-            </select> {/* aqui */}
+            </select>
 
             <button className="conteudoPrincipal-btn" onClick={this.alteraInformacoes}>Alterar Informações</button>
             <button className="conteudoPrincipal-btn" onClick={this.deletaLancamento}>Deletar Lançamento</button>

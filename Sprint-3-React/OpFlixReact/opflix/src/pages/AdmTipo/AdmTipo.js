@@ -230,6 +230,8 @@ class AdmTipo extends Component {
                 )
               })}
             </select>
+
+            <h3>Formulário para Alterar o Tipo selecionado </h3>
             
             <input type="text"
               placeholder="Digite o tipo a ser alterado"
