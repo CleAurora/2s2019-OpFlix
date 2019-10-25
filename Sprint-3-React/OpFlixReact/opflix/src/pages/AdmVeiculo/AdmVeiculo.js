@@ -12,15 +12,15 @@ class AdmVeiculo extends Component {
     super();
     this.state = {
       lista: [],
-      listaVeiculosSelect: [];
+      listaVeiculosSelect: [],
       nome: '',
       editaNome: '',
-      idTipo: 0
+      idVeiculo: 0
     };
   }
 
   componentDidMount() {
-    this.listaTiposSelect()
+    this.listaVeiculosSelect();
   }
 
   atualizaNome = (event) => {
@@ -31,8 +31,8 @@ class AdmVeiculo extends Component {
     this.setState({ editaNome: event.target.value });
   }
 
-  editaIdTipo = (event) => {
-    this.setState({ idTipo: event.target.value })
+  editaidVeiculo = (event) => {
+    this.setState({ idVeiculo: event.target.value })
   }
 
   mudaParaTelaAdministrador = (event) => {
@@ -56,12 +56,12 @@ class AdmVeiculo extends Component {
     })
       .then(response => {
         if (response.status === 200) {
-          this.setState({ listaTiposSelect: response.data, lista: response.data });
+          this.setState({ listaVeiculosSelect: response.data });
         }
       });
   }
 
-  listaveiculo = (event) => {
+  listaVeiculo = (event) => {
     event.preventDefault();
     Axios.get('http://localhost:5000/api/veiculos', {
       headers: {
@@ -74,7 +74,7 @@ class AdmVeiculo extends Component {
           let response = resposta.data;
           this.setState({
             lista: response,
-            listaTiposSelect: response
+            listaVeiculoSelect: response
           })
         } else {
           this.setState({ erro: "Oops! Tem erro.." })
@@ -115,7 +115,7 @@ class AdmVeiculo extends Component {
   alteraInformacoes = (event) => {
     event.preventDefault();
 
-    Axios.put('http://localhost:5000/api/veiculos/' + this.state.idTipo,
+    Axios.put('http://localhost:5000/api/veiculos/' + this.state.idVeiculo,
       {
         nome: this.state.editaNome
       },
@@ -131,7 +131,7 @@ class AdmVeiculo extends Component {
             editaNome: '',
             idVeiculo: '0'
           });
-          this.listaTiposSelect();
+          this.listaVeiculosSelect();
         } else {
           this.setState({ erro: 'Oops!' })
         }
@@ -139,10 +139,10 @@ class AdmVeiculo extends Component {
       .catch(error => this.setState({ erro: 'Falha ao tentar atualizar tipo!' }))
   }
 
-  deletaTipo = (event) => {
+  deletaVeiculo = (event) => {
     event.preventDefault();
 
-    Axios.delete('http://localhost:5000/api/veiculos/' + this.state.idTipo,
+    Axios.delete('http://localhost:5000/api/veiculos/' + this.state.idVeiculo,
       {
         headers: {
           "Content-Type": "application/json",
@@ -173,7 +173,7 @@ class AdmVeiculo extends Component {
           <section className="conteudoPrincipalAdministrador">
             <h2>Veículo</h2>
             <div className="containerAdmin" >
-              <button className="conteudoPrincipal-btn" onClick={this.listaveiculo}>Listar</button>
+              <button className="conteudoPrincipal-btn" onClick={this.listaVeiculo}>Listar</button>
               <button className="conteudoPrincipal-btn" onClick={this.mudaParaTelaAdministrador}>Voltar</button>
             </div>
           </section>
@@ -222,7 +222,7 @@ class AdmVeiculo extends Component {
 
             <h3>Para Deletar e Alterar selecione a opção</h3>
 
-            <select id="option" onChange={this.editaIdTipo} value={this.state.idTipo}>
+            <select id="option" onChange={this.editaidVeiculo} value={this.state.idVeiculo}>
               <option value="0" disabled >Selecione o veículo a ser alterado ou deletado</option>
               {this.state.listaVeiculosSelect.map(element => {
                 return (
