@@ -5,12 +5,10 @@ class Home extends Component {
     static navigationOptions = {
         tabBarIcon: () => (
             <Image
-                source={require('../assets/img/login.png')}
-                style={StyleSheet.tabBarNavigatorIcon}
-
-                source={require('../assets/img/cadastro.png')}
-                style={StyleSheet.tabBarNavigatorIcon}
+                source={require('../assets/img/administrador.png')}
+                style={StyleSheet.tabBarNavigatorIcon}  
             />
+           
         ),
     };
 
