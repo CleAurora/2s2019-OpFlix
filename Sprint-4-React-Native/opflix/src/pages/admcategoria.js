@@ -38,22 +38,48 @@ class Categorias extends Component {
 
   render() {
     return (
-      <FlatList
+      <View>
+        <Text style={styles.tittleText}>Lista de Categorias</Text>
+        <FlatList
         data={this.state.categorias}
         keyExtractor={item => item.idCategoria}
         renderItem={({ item }) => (
-          <View>
-            <Text>{item.nome}</Text>
+          <View style={styles.body}>
+            <Text style={styles.text}>{item.nome}</Text>
           </View>
         )}
       />
+
+      </View>
+      
     );
   }
 
 }
 
 const styles = StyleSheet.create({
-  tabNavigatorIcon: { width: 35, height: 35 }
+  tabNavigatorIcon: {
+    width: 35,
+    height: 35
+  },
+
+  baseText: {
+    fontFamily: 'Cohin',
+    padding:10,
+  },
+
+  tittleText: {
+    fontFamily: 'Cohin',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#484445',
+    padding: 16,
+    alignItems: 'center',
+  },
+
+  text: {color: 'white', fontSize: 15},
+  body: {backgroundColor: '#484445'}
+
 });
 
 export default Categorias;

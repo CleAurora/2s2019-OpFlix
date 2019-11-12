@@ -38,16 +38,17 @@ class Usuarios extends Component {
     return(
       
       <FlatList 
+        style={styles.Text} 
         data={this.state.usuarios}
         keyExtractor={item => item.idUsuario}
         renderItem={({item}) => (
           <View>
             <Text>{item.nome}</Text>
             <Text>{item.email}</Text>
-            <Text>{item.senha}</Text>
             <Text>{item.celular}</Text>
             <Text>{item.endereco}</Text>
             <Text>{item.idPerfil}</Text>
+
           </View>
         )}
       />
@@ -57,7 +58,10 @@ class Usuarios extends Component {
 }
 
 const styles = StyleSheet.create({
-  tabNavigatorIcon: { width: 35, height: 35 }
+  tabNavigatorIcon: { width: 35, height: 35 },
+
+  Text: {fontFamily: "Robota", fontSize: 20}
 });
+
 
 export default Usuarios;
