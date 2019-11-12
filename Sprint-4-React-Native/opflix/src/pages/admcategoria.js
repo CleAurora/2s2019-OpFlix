@@ -1,45 +1,49 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { Text, View, Image, StyleSheet, FlatList, AsyncStorage } from 'react-native';
 
 class Categorias extends Component {
   //apresenta lista de categorias
 
   static navigationOptions = {
-    tabBarIcon: () =>(
-      <Image 
+    tabBarIcon: () => (
+      <Image
         source={require('../assets/img/categoria.png')}
         style={styles.tabNavigatorIcon}
       />
     ),
   };
 
-  constructor(){
+  constructor() {
     super();
-    this.state={
+    this.state = {
       categorias: [],
     };
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this._carregarCategorias();
   }
 
-  _carregarCategorias = async () =>{
-    await fetch('http://192.168.3.192:5000/api/categorias')
-    .then(response => response.json())
-    .then(data => this.setState({categorias: data}))
-    .catch(erro => console.warn(erro));
+  _carregarCategorias = async () => {
+    await fetch('http://192.168.3.192:5000/api/categorias', {
+      headers: {
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
+      }
+    })
+      .then(response => response.json())
+      // .then(data => console.warn(data))
+      .then(data => this.setState({ categorias: data }))
+      .catch(erro => console.warn(erro));
   };
 
-  render(){
-    return(
-      <FlatList 
+  render() {
+    return (
+      <FlatList
         data={this.state.categorias}
         keyExtractor={item => item.idCategoria}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <View>
-            <Text>{item.Nome}</Text>
+            <Text>{item.nome}</Text>
           </View>
         )}
       />
@@ -49,7 +53,7 @@ class Categorias extends Component {
 }
 
 const styles = StyleSheet.create({
-  tabNavigatorIcon: { width: 25, height: 25, tintColor: 'black' }
+  tabNavigatorIcon: { width: 35, height: 35 }
 });
 
 export default Categorias;

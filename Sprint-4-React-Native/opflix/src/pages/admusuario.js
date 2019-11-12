@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { Text, View, Image, StyleSheet, FlatList, AsyncStorage } from 'react-native';
 
 class Usuarios extends Component {
 
@@ -21,11 +20,15 @@ class Usuarios extends Component {
   }
 
   componentDidMount(){
-    this._carregarCategorias();
+    this._carregarUsuarios();
   }
 
-  _carregarCategorias = async () =>{
-    await fetch('http://192.168.3.192:5000/api/categorias')
+  _carregarUsuarios = async () =>{
+    await fetch('http://192.168.3.192:5000/api/usuarios', {
+      headers:{
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
+      }
+    })
     .then(response => response.json())
     .then(data => this.setState({usuarios: data}))
     .catch(erro => console.warn(erro));
@@ -33,17 +36,18 @@ class Usuarios extends Component {
 
   render(){
     return(
+      
       <FlatList 
         data={this.state.usuarios}
         keyExtractor={item => item.idUsuario}
         renderItem={({item}) => (
           <View>
-            <Text>{item.Nome}</Text>
-            <Text>{item.Email}</Text>
-            <Text>{item.Senha}</Text>
-            <Text>{item.Celular}</Text>
-            <Text>{item.Endereco}</Text>
-            <Text>{item.IdPerfil}</Text>
+            <Text>{item.nome}</Text>
+            <Text>{item.email}</Text>
+            <Text>{item.senha}</Text>
+            <Text>{item.celular}</Text>
+            <Text>{item.endereco}</Text>
+            <Text>{item.idPerfil}</Text>
           </View>
         )}
       />
@@ -53,7 +57,7 @@ class Usuarios extends Component {
 }
 
 const styles = StyleSheet.create({
-  tabNavigatorIcon: { width: 25, height: 25, tintColor: 'black' }
+  tabNavigatorIcon: { width: 35, height: 35 }
 });
 
-export default Categorias;
+export default Usuarios;

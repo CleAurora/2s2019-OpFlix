@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
+import { Text, View, Image, StyleSheet, FlatList, AsyncStorage } from 'react-native';
+
 
 class Tipos extends Component {
 
@@ -25,7 +25,11 @@ class Tipos extends Component {
   }
 
   _carregarTipos = async () =>{
-    await fetch('http://192.168.3.192:5000/api/tipos')
+    await fetch('http://192.168.3.192:5000/api/tipos', {
+      headers: {
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
+      }
+    })
     .then(response => response.json())
     .then(data => this.setState({tipos: data}))
     .catch(erro => console.warn(erro));
@@ -38,7 +42,7 @@ class Tipos extends Component {
         keyExtractor={item => item.idTipos}
         renderItem={({item}) => (
           <View>
-            <Text>{item.Nome}</Text>
+            <Text>{item.nome}</Text>
           </View>
         )}
       />
@@ -48,7 +52,7 @@ class Tipos extends Component {
 }
 
 const styles = StyleSheet.create({
-  tabNavigatorIcon: { width: 25, height: 25, tintColor: 'black' }
+  tabNavigatorIcon: { width: 35, height: 35}
 });
 
 export default Tipos;

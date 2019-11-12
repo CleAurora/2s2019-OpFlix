@@ -1,7 +1,17 @@
 import React, {Component} from 'react';
-import {Text, AsyncStorage, View} from 'react-native';
+import {Text, AsyncStorage, View, Image, StyleSheet} from 'react-native';
 
 class Profile extends Component {
+  
+  static navigationOptions = {
+    tabBarIcon: () =>(
+      <Image 
+        source={require('../assets/img/rolo2.png')}
+        style={styles.tabNavigatorIcon}
+      />
+    ),
+  };
+  
   constructor() {
     super();
     this.state = {
@@ -26,10 +36,16 @@ class Profile extends Component {
   render() {
     return (
       <View>
+        <Text>Código de Segurança</Text>
         <Text>{this.state.token}</Text>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  tabNavigatorIcon: { width: 35, height: 35 }
+});
+
 
 export default Profile;

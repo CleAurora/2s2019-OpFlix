@@ -20,7 +20,7 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-    tabBarNavigatorIcon: { width: 25, height: 25, tintColor: 'black' }
+    tabBarNavigatorIcon: { width: 35, height: 35}
 });
 
 export default Home;
