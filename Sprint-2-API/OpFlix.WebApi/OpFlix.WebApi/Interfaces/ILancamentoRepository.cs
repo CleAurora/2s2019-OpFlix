@@ -19,5 +19,16 @@ namespace OpFlix.WebApi.Interfaces
         List<Lancamentos> BuscarPorIdVeiculo(int id);
 
         List<Lancamentos> BuscarPorData(DateTime data);
+
+        List<Lancamentos> BuscarPorCategoria(int idCategoria);
+
+        List<Lancamentos> BuscarPorVeiculo(int idVeiculo);
+
+        List<Lancamentos> BuscarPorTipo(int idTipo);
+
+        List<Lancamentos> BuscarPorClassificacao(int idClassificacao);
+
+
+
     }
 }

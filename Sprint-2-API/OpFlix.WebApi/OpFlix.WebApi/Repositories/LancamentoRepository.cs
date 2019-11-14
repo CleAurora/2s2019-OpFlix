@@ -114,5 +114,63 @@ namespace OpFlix.WebApi.Repositories
                 return ctx.Lancamentos.Where(item => item.DataLancamento == data).ToList();
             }
         }
+
+        /// <summary>
+        /// Filtro que busca Lançamento por Categoria
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <returns></returns>
+        List<Lancamentos> ILancamentoRepository.BuscarPorCategoria(int idCategoria)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Lancamentos.Where(item => item.IdCategoria == idCategoria).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Filtro que busca Lançamento por Veículo
+        /// </summary>
+        /// <param name="idVeiculo"></param>
+        /// <returns></returns>
+        public List<Lancamentos> BuscarPorVeiculo(int idVeiculo)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Lancamentos.Where(item => item.IdVeiculo == idVeiculo).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Filtro que busca Lançamento por Tipo de Mídia
+        /// </summary>
+        /// <param name="idTipo"></param>
+        /// <returns></returns>
+        public List<Lancamentos> BuscarPorTipo(int idTipo)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Lancamentos.Where(item => item.IdTipo == idTipo).ToList();
+            }
+        }
+
+        /// <summary>
+        /// Filtro que busca Lançamento por Classificação
+        /// </summary>
+        /// <param name="idClassificacao"></param>
+        /// <returns></returns>
+        public List<Lancamentos> BuscarPorClassificacao(int idClassificacao)
+        {
+            using (OpFlixContext ctx = new OpFlixContext())
+            {
+                return ctx.Lancamentos.Where(item => item.IdClassificacao == idClassificacao).ToList();
+            }
+            
+        }
+
+        //veiculação, mídia e plataforma, categoria
+
+
+
     }
 }

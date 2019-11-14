@@ -83,7 +83,7 @@ namespace OpFlix.WebApi.Controllers
         /// <param name="lancamento">Lançamento</param>
         [HttpPut("{id}")]
         [Authorize(Roles = "Administrador")]
-        public IActionResult Atualizar (int id, Lancamentos lancamento)
+        public IActionResult Atualizar(int id, Lancamentos lancamento)
         {
             try
             {
@@ -152,6 +152,82 @@ namespace OpFlix.WebApi.Controllers
             try
             {
                 return Ok(LancamentoRepository.BuscarPorData(data));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Oops! Tem erro aqui... " + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Chama método que filtra por categoria
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <returns></returns>
+        [HttpGet("BuscaPorCategoria{idcategoria}")]
+        [Authorize]
+        public IActionResult BuscarPorCategoria(int idCategoria)
+        {
+            try
+            {
+                return Ok(LancamentoRepository.BuscarPorCategoria(idCategoria));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Oops! Tem erro aqui... " + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Chama método que filtra por tipo de entretenimento
+        /// </summary>
+        /// <param name="idTipo"></param>
+        /// <returns></returns>
+        [HttpGet("BuscaPorTipo{tipo}")]
+        [Authorize]
+        public IActionResult BuscarPorTipo(int idTipo)
+        {
+            try
+            {
+                return Ok(LancamentoRepository.BuscarPorTipo(idTipo));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Oops! Tem erro aqui... " + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Chama método que filtra por veículo de comunicação
+        /// </summary>
+        /// <param name="idVeiculo"></param>
+        /// <returns></returns>
+        [HttpGet("BuscaPorVeiculo{idVeiculo}")]
+        [Authorize]
+        public IActionResult BuscarPorVeiculo(int idVeiculo)
+        {
+            try
+            {
+                return Ok(LancamentoRepository.BuscarPorIdVeiculo(idVeiculo));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { mensagem = "Oops! Tem erro aqui... " + ex.Message });
+            }
+        }
+
+        /// <summary>
+        /// Chama método que filtra por Classificação indicativa
+        /// </summary>
+        /// <param name="idClassificacao"></param>
+        /// <returns></returns>
+        [HttpGet("BuscaPorClassificacao{idClassificacao}")]
+        [Authorize]
+        public IActionResult BuscarPorClassificacao(int idClassificacao)
+        {
+            try
+            {
+                return Ok(LancamentoRepository.BuscarPorClassificacao(idClassificacao));
             }
             catch (Exception ex)
             {
