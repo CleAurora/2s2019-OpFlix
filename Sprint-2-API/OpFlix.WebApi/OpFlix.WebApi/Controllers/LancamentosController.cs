@@ -183,7 +183,7 @@ namespace OpFlix.WebApi.Controllers
         /// </summary>
         /// <param name="idTipo"></param>
         /// <returns></returns>
-        [HttpGet("BuscaPorTipo{tipo}")]
+        [HttpGet("BuscaPorTipo{idTipo}")]
         [Authorize]
         public IActionResult BuscarPorTipo(int idTipo)
         {
