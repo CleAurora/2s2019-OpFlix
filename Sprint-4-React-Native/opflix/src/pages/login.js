@@ -61,7 +61,7 @@ class Login extends Component {
           <View style={styles.headerArea}>
             <Image
               source={menu}
-              style={{ width: "5%", height: "17%", tintColor:'#ffffff' }}></Image>
+              style={{width: 40 , height: 40, resizeMode:"stretch", marginBottom:"-7%" ,marginTop:"1%", marginLeft: "0.5%",tintColor:'#ffffff' }}></Image>
             <Text style={styles.textTittle}>OPFLIX</Text>
           </View>
 
@@ -97,30 +97,43 @@ const styles = StyleSheet.create({
 
   textTittle: {
     fontFamily: 'Cohin',
-    fontSize: 25,
+    fontSize: 30,
+    marginTop: "-3%",
+    marginBottom: "1%",
     fontWeight: 'bold',
     color: '#ffffff',
     textAlign: 'center',
-    marginBottom: -50,
   },
 
   loginArea: {
-    backgroundColor: 'rgba(72, 68, 69, 0.5)',
-    marginTop: '35%',
-    marginHorizontal: '15%'
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    paddingLeft:"10%",
+    paddingRight:"10%",
+    paddingTop:"10%",
+    width: "80%",
+    height: "60%",
+    marginLeft: "10%",
+    marginRight: "10%",
+    marginTop: "25%",
   },
-
+  
   inputArea: {
     backgroundColor: '#ffffff',
     textAlign: 'center',
+    marginVertical: "8%"
   },
 
   btnLogin: {
     backgroundColor: '#484445',
-    height: 30,
+    height: 50,
+    marginTop:"30%",
+    paddingTop: "4%"
   },
 
   tituloDoBotao: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#fff",
     textAlign: 'center',
   }
 });

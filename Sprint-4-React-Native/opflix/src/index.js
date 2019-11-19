@@ -47,7 +47,7 @@ const HomeNavigator = createBottomTabNavigator(
       showIcon: true,
       showLabel: false,
       inactiveBackgroundColor: '#ffffff',
-      activeBackgroundColor: '#000000',
+      activeBackgroundColor: '#484445',
       style: {
         width: '100%',
         height: 50,

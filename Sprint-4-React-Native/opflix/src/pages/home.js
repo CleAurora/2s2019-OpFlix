@@ -8,7 +8,7 @@ class Home extends Component {
     tabBarIcon: () => (
       <Image
         source={require('../assets/img/administrador.png')}
-        style={StyleSheet.tabBarNavigatorIcon}
+        style={styles.tabNavigatorIcon}
       />
 
     ),
@@ -38,9 +38,10 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
-  tabBarNavigatorIcon: {
+
+  tabNavigatorIcon: {
     width: 35,
-    height: 35,
+    height: 35
   },
 
   areaTittle: {
