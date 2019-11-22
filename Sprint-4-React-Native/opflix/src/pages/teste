@@ -1,0 +1,128 @@
+ {/* <View style={styles.caixaBranca}>
+              <Text style={styles.tittleText}>Cadastra Lançamentos</Text>
+              <View style={styles.formularioArea}>
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Lançamento"
+                  onChangeText={nome => this.setState({ nome })}
+                  value={this.state.nome}
+                />
+                <Text></Text>
+
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Sinopse"
+                  onChangeText={sinopse => this.setState({ sinopse })}
+                  value={this.state.sinopse}
+                />
+                <Text></Text>
+
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Duração"
+                  onChangeText={duracao => this.setState({ duracao })}
+                  value={this.state.duracao}
+                />
+                <Text></Text>
+
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Data de Lançamento"
+                  onChangeText={dataLancamento => this.setState({ dataLancamento })}
+                  value={this.state.dataLancamento}
+                />
+                <Text></Text>
+
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Veículo de Comunicação"
+                  onChangeText={idVeiculo => this.setState({ idVeiculo })}
+                  value={this.state.idVeiculo}
+                />
+                <Text></Text>
+
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Categoria"
+                  onChangeText={idCategoria => this.setState({ idCategoria })}
+                  value={this.state.idCategoria}
+                />
+                <Text></Text>
+
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Tipo de Mídia"
+                  onChangeText={idTipo => this.setState({ idTipo })}
+                  value={this.state.idTipo}
+                />
+                <Text></Text>
+
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Classificação"
+                  onChangeText={idClassificacao => this.setState({ idClassificacao })}
+                  value={this.state.idClassificacao}
+                />
+                <Text></Text>
+                
+                
+                <TouchableOpacity
+                  onPress={this._cadastraLancamentos}
+                  style={styles.btn}
+                >
+                  <Text style={styles.textTittlebtn}>Cadastrar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+
+            <View style={styles.caixaBranca}>
+              <View>
+                <Text style={styles.tittleText}>Atualiza e Deleta Lançamentos</Text>
+              </View>
+              <Picker
+                style={styles.picker}
+                selectedValue={this.state.lancamentoSelecionado}
+                onValueChange={(value, index) => {
+                  console.warn(this.state.lancamentos[index])
+                  this.setState({ lancamentoSelecionado: value });
+                  this.setState({ nomeASerAlterado: this.state.lancamentos[index].nome })
+                }}
+              >
+                {this.state.lancamentos.map(element => {
+                  return (
+                    <Picker.Item
+                      value={element.idLancamento}
+                      label={element.nome}
+                    />
+                  )
+                })}
+              </Picker>
+              <Text style={styles.feedback}>Você selecionou o Lançamento {this.state.nomeASerAlterado}</Text>
+              <Text></Text>
+
+              <View style={styles.formularioArea}>
+
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Digite o novo lançamento"
+                  onChangeText={nomeASerAlterado => this.setState({ nomeASerAlterado })}
+                  value={this.state.nomeASerAlterado}
+                />
+                <Text></Text>
+                <TouchableOpacity
+                  onPress={this._atualizaLancamento}
+                  style={styles.btn}
+                >
+                  <Text style={styles.textTittlebtn}>Atualizar Lançamento</Text>
+                </TouchableOpacity>
+                <Text></Text>
+                <TouchableOpacity
+                  onPress={this._deletaLancamento}
+                  style={styles.btn}
+                >
+                  <Text style={styles.textTittlebtn}>Deletar Lançamento</Text>
+                </TouchableOpacity>
+                <Text></Text>
+
+              </View>
+            </View> */}

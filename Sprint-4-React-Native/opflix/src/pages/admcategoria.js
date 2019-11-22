@@ -32,9 +32,6 @@ class Categorias extends Component {
     this._carregarCategorias();
   }
 
-  // atualizaNome = (event) => {
-  //   this.setState({ nome: event.target.value });
-  // }
 
 
   //Verbos http
@@ -76,9 +73,6 @@ class Categorias extends Component {
   }
 
   _atualizaCategoria = async () => {
-    console.warn(this.state.nome);
-    console.warn(await AsyncStorage.getItem('@opflix:token'))
-
     await Axios.put('http://192.168.3.192:5000/api/categorias/' + this.state.categoriaSelecionada,
       {
         nome: this.state.nomeASerAlterado
@@ -101,9 +95,9 @@ class Categorias extends Component {
   }
 
   _deletaCategoria = async () => {
-    await Axios.delete('http://192.168.3.192:5000/api/categorias', {
-      "idCategoria": this.state.idCategoria,
-    },
+    console.warn(this.state.nome);
+    console.warn(await AsyncStorage.getItem('@opflix:token'))
+    await Axios.delete('http://192.168.3.192:5000/api/categorias/' + this.state.categoriaSelecionada,
       {
         headers: {
           "Content-Type": "application/json",
@@ -117,51 +111,51 @@ class Categorias extends Component {
             idCategoria: "0",
             erro: ''
           });
-          this.listaCategoriasSelect();
+          this._carregarCategorias();
         } else {
           this.setState({ erro: 'Falha ao tentar deletar categoria!' })
         }
       })
       .catch(error => this.setState({ erro: 'Não é possível deletar uma categoria que possui lançamento associado!' }))
-    }
-    
-    
-    render() {
-      return (
-        <View>
+  }
+
+
+  render() {
+    return (
+      <View>
         <ImageBackground
           source={planoDeFundo}
           style={{ width: "100%", height: "100%" }}
-          >
+        >
           <View style={styles.headerArea}>
             <Image
               source={menu}
-              style={{ width: "5%", height: "16%", tintColor: "#fff" }}></Image>
+              style={{ width: 40, height: 40, resizeMode: "stretch", marginBottom: "-7%", marginTop: "1%", marginLeft: "0.5%", tintColor: '#ffffff' }}></Image>
             <Text style={styles.textTittle}>OPFLIX</Text>
           </View>
 
           <ScrollView>
-              <Text></Text>
-              <Text></Text>
-              <View style={styles.caixaBranca1}>
+            <Text></Text>
+            <Text></Text>
+            <View style={styles.caixaBranca1}>
               <Text style={styles.tittleText1}>Lista de Categorias</Text>
-            <FlatList
-              data={this.state.categorias}
-              keyExtractor={item => item.idCategoria}
-              renderItem={({ item }) => (
-                <View>
-                  <Text style={styles.text}>{item.nome}</Text>
-                </View>
-              )}
+              <FlatList
+                data={this.state.categorias}
+                keyExtractor={item => item.idCategoria}
+                renderItem={({ item }) => (
+                  <View>
+                    <Text style={styles.text}>{item.nome}</Text>
+                  </View>
+                )}
               />
-              </View>
+            </View>
 
             <View style={styles.caixaBranca}>
               <Text style={styles.tittleText}>Cadastra Categorias</Text>
               <View style={styles.formularioArea}>
                 <TextInput
                   style={styles.inputArea}
-                  placeholder="categoria"
+                  placeholder="Categoria"
                   onChangeText={nome => this.setState({ nome })}
                   value={this.state.nome}
                 />
@@ -170,7 +164,7 @@ class Categorias extends Component {
                   onPress={this._cadastraCategorias}
                   style={styles.btn}
                 >
-                  <Text style={styles.textTittle}>Cadastrar</Text>
+                  <Text style={styles.textTittlebtn}>Cadastrar</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -200,34 +194,32 @@ class Categorias extends Component {
               <Text style={styles.feedback}>Você selecionou a categoria {this.state.nomeASerAlterado}</Text>
               <Text></Text>
 
-            <View style={styles.formularioArea}>
+              <View style={styles.formularioArea}>
 
-              <TextInput
-                style={styles.inputArea}
-                placeholder="Digite a nova categoria"
-                onChangeText={nomeASerAlterado => this.setState({ nomeASerAlterado })}
-                value={this.state.nomeASerAlterado}
+                <TextInput
+                  style={styles.inputArea}
+                  placeholder="Digite a nova categoria"
+                  onChangeText={nomeASerAlterado => this.setState({ nomeASerAlterado })}
+                  value={this.state.nomeASerAlterado}
                 />
-              <Text></Text>
-              <TouchableOpacity
-                onPress={this._atualizaCategoria}
-                style={styles.btn}
+                <Text></Text>
+                <TouchableOpacity
+                  onPress={this._atualizaCategoria}
+                  style={styles.btn}
                 >
-                <Text style={styles.textTittle}>Atualizar Categoria</Text>
-              </TouchableOpacity>
-              <Text></Text>
-              <TouchableOpacity
-                onPress={this._deletaCategoria}
-                style={styles.btn}
-              >
-                <Text style={styles.textTittle}>Deletar Categoria</Text>
-              </TouchableOpacity>
-              <Text></Text>
+                  <Text style={styles.textTittlebtn}>Atualizar Categoria</Text>
+                </TouchableOpacity>
+                <Text></Text>
+                <TouchableOpacity
+                  onPress={this._deletaCategoria}
+                  style={styles.btn}
+                >
+                  <Text style={styles.textTittlebtn}>Deletar Categoria</Text>
+                </TouchableOpacity>
+                <Text></Text>
 
-                </View>
+              </View>
             </View>
-
-
 
           </ScrollView>
         </ImageBackground>
@@ -290,9 +282,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  text: { color: 'black', fontSize: 15 , textAlign: "center"
-},
-  
+  text: {
+    color: 'black', fontSize: 15, textAlign: "center"
+  },
+
   body: { backgroundColor: 'rgba(72, 68, 69, 0.8)' },
 
   headerArea: {
@@ -300,12 +293,22 @@ const styles = StyleSheet.create({
   },
 
   feedback: {
-    fontSize:15,
+    fontSize: 15,
     textAlign: "center",
     marginBottom: 10
   },
 
   textTittle: {
+    fontFamily: 'Cohin',
+    fontSize: 30,
+    marginTop: "-3%",
+    marginBottom: "1%",
+    fontWeight: 'bold',
+    color: '#ffffff',
+    textAlign: 'center',
+  },
+
+  textTittlebtn: {
     fontFamily: 'Cohin',
     fontSize: 16,
     fontWeight: 'bold',
@@ -317,7 +320,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.5)',
     paddingBottom: "6%",
     marginHorizontal: "10%",
-    marginVertical:"5%",
+    marginVertical: "5%",
     borderRadius: 15
   },
   caixaBranca1: {
