@@ -75,7 +75,6 @@ class Tipos extends Component {
           "Content-Type": "application/json",
           'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
         },
-
       })
       .then(response => {
         if (response.status === 200) {
@@ -133,7 +132,7 @@ class Tipos extends Component {
                 data={this.state.tipos}
                 keyExtractor={item => item.idTipo}
                 renderItem={({ item }) => (
-                  <View style={styles.body}>
+                  <View>
                     <Text style={styles.text}>{item.nome}</Text>
                   </View>
                 )}

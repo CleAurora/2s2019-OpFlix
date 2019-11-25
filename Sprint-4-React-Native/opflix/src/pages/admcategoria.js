@@ -42,13 +42,11 @@ class Categorias extends Component {
       }
     })
       .then(response => response.json())
-      // .then(data => console.warn(data))
       .then(data => this.setState({ categorias: data }))
       .catch(erro => console.warn(erro));
   };
 
   _cadastraCategorias = async () => {
-
     await Axios.post('http://192.168.3.192:5000/api/categorias', {
       "nome": this.state.nome,
     },
@@ -82,7 +80,6 @@ class Categorias extends Component {
           "Content-Type": "application/json",
           'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
         },
-
       })
       .then(response => {
         if (response.status === 200) {

@@ -27,12 +27,31 @@ class Lancamentos extends Component {
       categorias: [],
       categoriaASerBuscada: '',
       lancamentosPorCategoria: [],
+      tipos: [],
+      tipoASerBuscado: '',
+      lancamentosPorTipo: [],
+      veiculos: [],
+      veiculoASerBuscado: '',
+      lancamentosPorVeiculo: [],
+      dataASerBuscada: '',
+      lancamentosPorData: []
+      // classificacoes: [],
+      // classificacaoASerBuscada: '',
+      // lancamentosPorClassificacao: []
     };
   }
 
   componentDidMount() {
     this._carregarLancamentos();
     this._carregarCategorias();
+    this._BuscarLancamentosPorCategoria();
+    this._carregarTipos();
+    this._BuscarLancamentosPorTipo();
+    this._carregarVeiculos();
+    this._BuscarLancamentosPorVeiculo();
+    this._BuscarLancamentosPorData();
+    // this._carregarClassificacao();
+    // this._BuscarLancamentosPorClassificacao();
   }
 
   //Verbos Http
@@ -43,7 +62,6 @@ class Lancamentos extends Component {
       }
     })
       .then(response => response.json())
-      // .then(data => console.warn(data))
       .then(data => this.setState({ categorias: data }))
       .catch(erro => console.warn(erro));
   };
@@ -56,6 +74,28 @@ class Lancamentos extends Component {
     })
       .then(response => response.json())
       .then(data => this.setState({ lancamentos: data }))
+      .catch(erro => console.warn(erro));
+  };
+
+  _carregarTipos = async () => {
+    await fetch('http://192.168.3.192:5000/api/tipos', {
+      headers: {
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
+      }
+    })
+      .then(response => response.json())
+      .then(data => this.setState({ tipos: data }))
+      .catch(erro => console.warn(erro));
+  };
+
+  _carregarVeiculos = async () => {
+    await fetch('http://192.168.3.192:5000/api/veiculos', {
+      headers: {
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
+      }
+    })
+      .then(response => response.json())
+      .then(data => this.setState({ veiculos: data }))
       .catch(erro => console.warn(erro));
   };
 
@@ -135,7 +175,44 @@ class Lancamentos extends Component {
       }
     })
       .then(response => response.json())
-      .then(data => this.setState({ lancamentos: data }))
+      .then(data => this.setState({ lancamentosPorCategoria: data }))
+      .catch(erro => console.warn(erro));
+  };
+
+  //Busca por Tipo
+  _BuscarLancamentosPorTipo = async () => {
+    await fetch('http://192.168.3.192:5000/api/lancamentos/buscaportipo' + this.state.tipoASerBuscado, {
+      headers: {
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
+      }
+    })
+      .then(response => response.json())
+      .then(data => this.setState({ lancamentosPorTipo: data }))
+      .catch(erro => console.warn(erro));
+  };
+
+  //Busca por veículo de comunicação
+  _BuscarLancamentosPorVeiculo = async () => {
+    await fetch('http://192.168.3.192:5000/api/lancamentos/buscaporveiculo' + this.state.veiculoASerBuscado, {
+      headers: {
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
+      }
+    })
+      .then(response => response.json())
+      .then(data => this.setState({ lancamentosPorVeiculo: data }))
+      .catch(erro => console.warn(erro));
+  };
+
+  //Busca por Data
+  _BuscarLancamentosPorData = async () => {
+    console.warn(this.state.dataASerBuscada)
+    await fetch('http://192.168.3.192:5000/api/lancamentos/buscapordata' + this.state.dataASerBuscada, {
+      headers: {
+        'Authorization': 'Bearer ' + await AsyncStorage.getItem('@opflix:token')
+      }
+    })
+      .then(response => response.json())
+      .then(data => this.setState({ lancamentosPorData: data }))
       .catch(erro => console.warn(erro));
   };
 
@@ -178,7 +255,7 @@ class Lancamentos extends Component {
               />
             </View>
 
-
+            {/* Aqui começa o filtro por categoria */}
             <View style={styles.caixaBranca}>
               <View>
                 <Text style={styles.tittleText}>Filtrar por categoria</Text>
@@ -187,7 +264,7 @@ class Lancamentos extends Component {
                 style={styles.picker}
                 selectedValue={this.state.categoriaSelecionada}
                 onValueChange={(value, index) => {
-                  console.warn(this.state.categorias[index])
+                  //console.warn(this.state.categorias[index])
                   this.setState({ categoriaSelecionada: value });
                   this.setState({ categoriaASerBuscada: this.state.categorias[index].idCategoria })
                 }}
@@ -224,7 +301,7 @@ class Lancamentos extends Component {
               <View style={styles.caixaBranca1}>
                 <Text style={styles.tittleText1}>Lançamentos por Categoria</Text>
                 <FlatList
-                  data={this.state.lancamentos}
+                  data={this.state.lancamentosPorCategoria}
                   keyExtractor={item => item.idLancamento}
                   renderItem={({ item }) => (
                     <ScrollView style={styles.body}>
@@ -241,9 +318,181 @@ class Lancamentos extends Component {
                 />
               </View>
             </ScrollView>
+            {/* Aqui termina o filtro por categoria */}
+
+            {/* Aqui começa o filtro por tipo de mídia*/}
+            <View style={styles.caixaBranca}>
+              <View>
+                <Text style={styles.tittleText}>Filtrar por Tipo de Mídia</Text>
+              </View>
+              <Picker
+                style={styles.picker}
+                selectedValue={this.state.tipoSelecionado}
+                onValueChange={(value, index) => {
+                  //console.warn(this.state.tipos[index])
+                  this.setState({ tipoSelecionado: value });
+                  this.setState({ tipoASerBuscado: this.state.tipos[index].idTipo })
+                }}
+              >
+                {this.state.tipos.map(element => {
+                  return (
+                    <Picker.Item
+                      value={element.idTipo}
+                      label={element.nome}
+                    />
+                  )
+                })}
+              </Picker>
+              <Text style={styles.feedback}>Você selecionou o tipo de Mídia {this.state.tipoASerBuscado}</Text>
+              <Text></Text>
+
+              <View style={styles.formularioArea}>
+                <TouchableOpacity
+                  onPress={this._BuscarLancamentosPorTipo}
+                  style={styles.btn}
+                >
+                  <Text style={styles.textTittlebtn}>Buscar Lançamento por Tipo</Text>
+                </TouchableOpacity>
+                <Text></Text>
+              </View>
+            </View>
+
+            <ScrollView>
+              <Text></Text>
+              <Text></Text>
+              <View style={styles.caixaBranca1}>
+                <Text style={styles.tittleText1}>Lançamentos por Tipo</Text>
+                <FlatList
+                  data={this.state.lancamentosPorTipo}
+                  keyExtractor={item => item.idLancamento}
+                  renderItem={({ item }) => (
+                    <ScrollView style={styles.body}>
+                      <Text style={styles.text}>{item.nome}</Text>
+                      <Text style={styles.text}>{item.idVeiculo} - {item.idCategoria} - {item.idClassificacao} -{item.idTipo}
+                      </Text>
+                      <Text style={styles.text}>{item.duracao} minutos</Text>
+                      <Text style={styles.text}>{item.dataLancamento}</Text>
+                      <Text style={styles.text}>{item.sinopse}</Text>
+                      <Text></Text>
+                    </ScrollView>
+                  )}
+                />
+              </View>
+            </ScrollView>
+            {/* Aqui termina o filtro por tipo de mídia*/}
+
+            {/* Aqui começa o filtro por veículo de comunicação */}
+            <View style={styles.caixaBranca}>
+              <View>
+                <Text style={styles.tittleText}>Filtrar por veículo de Comunicação</Text>
+              </View>
+              <Picker
+                style={styles.picker}
+                selectedValue={this.state.veiculoSelecionada}
+                onValueChange={(value, index) => {
+                  //console.warn(this.state.veiculos[index])
+                  this.setState({ veiculoSelecionado: value });
+                  this.setState({ veiculoASerBuscado: this.state.veiculos[index].idVeiculo })
+                }}
+              >
+                {this.state.veiculos.map(element => {
+                  return (
+                    <Picker.Item
+                      value={element.idVeiculo}
+                      label={element.nome}
+                    />
+                  )
+                })}
+              </Picker>
+              <Text style={styles.feedback}>Você selecionou o veículo de comunicação {this.state.veiculoASerBuscado}</Text>
+              <Text></Text>
+
+              <View style={styles.formularioArea}>
+
+
+                <TouchableOpacity
+                  onPress={this._BuscarLancamentosPorVeiculo}
+                  style={styles.btn}
+                >
+                  <Text style={styles.textTittlebtn}>Buscar Lançamento por Veículo de Comunicação</Text>
+                </TouchableOpacity>
+                <Text></Text>
+
+              </View>
+            </View>
+
+            <ScrollView>
+              <Text></Text>
+              <Text></Text>
+              <View style={styles.caixaBranca1}>
+                <Text style={styles.tittleText1}>Lançamentos por Veículo de Comunicação</Text>
+                <FlatList
+                  data={this.state.lancamentosPorVeiculo}
+                  keyExtractor={item => item.idLancamento}
+                  renderItem={({ item }) => (
+                    <ScrollView style={styles.body}>
+                      <Text style={styles.text}>{item.nome}</Text>
+                      <Text style={styles.text}>{item.idVeiculo} - {item.idCategoria} - {item.idClassificacao} -{item.idTipo}
+                      </Text>
+                      <Text style={styles.text}>{item.duracao} minutos</Text>
+                      <Text style={styles.text}>{item.dataLancamento}</Text>
+                      <Text style={styles.text}>{item.sinopse}</Text>
+
+                      <Text></Text>
+                    </ScrollView>
+                  )}
+                />
+              </View>
+            </ScrollView>
+            {/* Aqui termina o filtro por veiculo */}
+
+            {/* Aqui começa o filtrar por data */}
+            <View style={styles.formularioArea}>
+              <Text style={styles.tittleText}>Filtrar Por Data</Text>
+              <TextInput
+                style={styles.inputArea}
+                placeholder="yyyy-mm-dd"
+                placeholderTextColor= "black"
+                onChangeText={dataASerBuscada => this.setState({ dataASerBuscada })}
+                defaultValue={this.state.dataASerBuscada}
+              />
+              <TouchableOpacity
+                onPress={this._BuscarLancamentosPorData}
+                style={styles.btn}
+              >
+                <Text style={styles.textTittlebtn}>Filtrar</Text>
+              </TouchableOpacity>
+            </View>
+
+            <ScrollView>
+              <Text></Text>
+              <Text></Text>
+              <View style={styles.caixaBranca1}>
+                <Text style={styles.tittleText1}>Lançamentos por Data</Text>
+                <FlatList
+                  data={this.state.lancamentosPorData}
+                  keyExtractor={item => item.idLancamento}
+                  renderItem={({ item }) => (
+                    <ScrollView style={styles.body}>
+                      <Text style={styles.text}>{item.nome}</Text>
+                      <Text style={styles.text}>{item.idVeiculo} - {item.idCategoria} - {item.idClassificacao} -{item.idTipo}
+                      </Text>
+                      <Text style={styles.text}>{item.duracao} minutos</Text>
+                      <Text style={styles.text}>{item.dataLancamento}</Text>
+                      <Text style={styles.text}>{item.sinopse}</Text>
+
+                      <Text></Text>
+                    </ScrollView>
+                  )}
+                />
+              </View>
+            </ScrollView>
+
+
+
           </ScrollView>
         </ImageBackground>
-      </View>
+      </View >
     );
   }
 }
@@ -266,7 +515,10 @@ const styles = StyleSheet.create({
 
   inputArea: {
     backgroundColor: '#ffffff',
-    textAlign: 'center'
+    textAlign: 'center',
+    paddingTop:"10%",
+    paddingBottom:"10%"
+
   },
 
   formularioArea: {
