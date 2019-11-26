@@ -25,12 +25,15 @@ class Lancamentos extends Component {
       nomeASerAlterado: '',
       lancamentoSelecionado: '',
       categorias: [],
+      categoriaMostrar: '',
       categoriaASerBuscada: '',
       lancamentosPorCategoria: [],
       tipos: [],
+      tipoMostrar: '',
       tipoASerBuscado: '',
       lancamentosPorTipo: [],
       veiculos: [],
+      veiculoMostrar: '',
       veiculoASerBuscado: '',
       lancamentosPorVeiculo: [],
       dataASerBuscada: '',
@@ -241,7 +244,7 @@ class Lancamentos extends Component {
                 data={this.state.lancamentos}
                 keyExtractor={item => item.idLancamento}
                 renderItem={({ item }) => (
-                  <ScrollView style={styles.body}>
+                  <ScrollView>
                     <Text style={styles.text}>{item.nome}</Text>
                     <Text style={styles.text}>{item.idVeiculo} - {item.idCategoria} - {item.idClassificacao} -{item.idTipo}
                     </Text>
@@ -260,13 +263,17 @@ class Lancamentos extends Component {
               <View>
                 <Text style={styles.tittleText}>Filtrar por categoria</Text>
               </View>
+              <Text></Text>
+              <Text></Text>
+              <Text></Text>
               <Picker
                 style={styles.picker}
                 selectedValue={this.state.categoriaSelecionada}
                 onValueChange={(value, index) => {
                   //console.warn(this.state.categorias[index])
                   this.setState({ categoriaSelecionada: value });
-                  this.setState({ categoriaASerBuscada: this.state.categorias[index].idCategoria })
+                  this.setState({ categoriaASerBuscada: this.state.categorias[index].idCategoria });
+                  this.setState({ categoriaMostrar: this.state.categorias[index].nome});
                 }}
               >
                 {this.state.categorias.map(element => {
@@ -278,7 +285,7 @@ class Lancamentos extends Component {
                   )
                 })}
               </Picker>
-              <Text style={styles.feedback}>Você selecionou a categoria {this.state.categoriaASerBuscada}</Text>
+              <Text style={styles.feedback}>Você selecionou a categoria {this.state.categoriaMostrar}</Text>
               <Text></Text>
 
               <View style={styles.formularioArea}>
@@ -304,7 +311,7 @@ class Lancamentos extends Component {
                   data={this.state.lancamentosPorCategoria}
                   keyExtractor={item => item.idLancamento}
                   renderItem={({ item }) => (
-                    <ScrollView style={styles.body}>
+                    <ScrollView>
                       <Text style={styles.text}>{item.nome}</Text>
                       <Text style={styles.text}>{item.idVeiculo} - {item.idCategoria} - {item.idClassificacao} -{item.idTipo}
                       </Text>
@@ -325,13 +332,18 @@ class Lancamentos extends Component {
               <View>
                 <Text style={styles.tittleText}>Filtrar por Tipo de Mídia</Text>
               </View>
+              <Text></Text>
+              <Text></Text>
+              <Text></Text>
+
               <Picker
                 style={styles.picker}
                 selectedValue={this.state.tipoSelecionado}
                 onValueChange={(value, index) => {
-                  //console.warn(this.state.tipos[index])
                   this.setState({ tipoSelecionado: value });
-                  this.setState({ tipoASerBuscado: this.state.tipos[index].idTipo })
+                  this.setState({ tipoASerBuscado: this.state.tipos[index].idTipo });
+                  this.setState({ tipoMostrar: this.state.tipos[index].nome});
+
                 }}
               >
                 {this.state.tipos.map(element => {
@@ -343,7 +355,7 @@ class Lancamentos extends Component {
                   )
                 })}
               </Picker>
-              <Text style={styles.feedback}>Você selecionou o tipo de Mídia {this.state.tipoASerBuscado}</Text>
+              <Text style={styles.feedback}>Você selecionou o tipo de Mídia {this.state.tipoMostrar}</Text>
               <Text></Text>
 
               <View style={styles.formularioArea}>
@@ -366,7 +378,7 @@ class Lancamentos extends Component {
                   data={this.state.lancamentosPorTipo}
                   keyExtractor={item => item.idLancamento}
                   renderItem={({ item }) => (
-                    <ScrollView style={styles.body}>
+                    <ScrollView>
                       <Text style={styles.text}>{item.nome}</Text>
                       <Text style={styles.text}>{item.idVeiculo} - {item.idCategoria} - {item.idClassificacao} -{item.idTipo}
                       </Text>
@@ -386,6 +398,9 @@ class Lancamentos extends Component {
               <View>
                 <Text style={styles.tittleText}>Filtrar por veículo de Comunicação</Text>
               </View>
+              <Text></Text>
+              <Text></Text>
+              <Text></Text>
               <Picker
                 style={styles.picker}
                 selectedValue={this.state.veiculoSelecionada}
@@ -393,6 +408,8 @@ class Lancamentos extends Component {
                   //console.warn(this.state.veiculos[index])
                   this.setState({ veiculoSelecionado: value });
                   this.setState({ veiculoASerBuscado: this.state.veiculos[index].idVeiculo })
+                  this.setState({ veiculoMostrar: this.state.veiculos[index].nome});
+
                 }}
               >
                 {this.state.veiculos.map(element => {
@@ -404,7 +421,7 @@ class Lancamentos extends Component {
                   )
                 })}
               </Picker>
-              <Text style={styles.feedback}>Você selecionou o veículo de comunicação {this.state.veiculoASerBuscado}</Text>
+              <Text style={styles.feedback}>Você selecionou o veículo de comunicação {this.state.veiculoMostrar}</Text>
               <Text></Text>
 
               <View style={styles.formularioArea}>
@@ -412,7 +429,7 @@ class Lancamentos extends Component {
 
                 <TouchableOpacity
                   onPress={this._BuscarLancamentosPorVeiculo}
-                  style={styles.btn}
+                  style={styles.btn1}
                 >
                   <Text style={styles.textTittlebtn}>Buscar Lançamento por Veículo de Comunicação</Text>
                 </TouchableOpacity>
@@ -430,7 +447,7 @@ class Lancamentos extends Component {
                   data={this.state.lancamentosPorVeiculo}
                   keyExtractor={item => item.idLancamento}
                   renderItem={({ item }) => (
-                    <ScrollView style={styles.body}>
+                    <ScrollView>
                       <Text style={styles.text}>{item.nome}</Text>
                       <Text style={styles.text}>{item.idVeiculo} - {item.idCategoria} - {item.idClassificacao} -{item.idTipo}
                       </Text>
@@ -468,12 +485,12 @@ class Lancamentos extends Component {
               <Text></Text>
               <Text></Text>
               <View style={styles.caixaBranca1}>
-                <Text style={styles.tittleText1}>Lançamentos por Data</Text>
+                <Text style={styles.tittleText1}>Filtrar por Data</Text>
                 <FlatList
                   data={this.state.lancamentosPorData}
                   keyExtractor={item => item.idLancamento}
                   renderItem={({ item }) => (
-                    <ScrollView style={styles.body}>
+                    <ScrollView>
                       <Text style={styles.text}>{item.nome}</Text>
                       <Text style={styles.text}>{item.idVeiculo} - {item.idCategoria} - {item.idClassificacao} -{item.idTipo}
                       </Text>
@@ -531,6 +548,11 @@ const styles = StyleSheet.create({
     height: 25
   },
 
+  btn1: {
+    backgroundColor: '#484445',
+    height: 50
+  },
+
   picker: {
     backgroundColor: "#FFF",
     margin: "10%"
@@ -557,8 +579,6 @@ const styles = StyleSheet.create({
   text: {
     color: 'black', fontSize: 15, textAlign: "center"
   },
-
-  body: { backgroundColor: 'rgba(72, 68, 69, 0.8)' },
 
   headerArea: {
     backgroundColor: '#484445',

@@ -135,7 +135,7 @@ class Veiculos extends Component {
                 data={this.state.veiculos}
                 keyExtractor={item => item.idVeiculo}
                 renderItem={({ item }) => (
-                  <View style={styles.body}>
+                  <View>
                     <Text style={styles.text}>{item.nome}</Text>
                   </View>
                 )}
