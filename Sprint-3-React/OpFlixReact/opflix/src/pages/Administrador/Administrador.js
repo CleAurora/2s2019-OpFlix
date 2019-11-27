@@ -17,7 +17,7 @@ class Administrador extends Component {
   }
 
   //Função para sair (no header)
-  logout = (event) =>{
+  logout = (event) => {
     localStorage.removeItem("usuario-opflix");
     localStorage.removeItem("isAdmin-opflix");
     this.props.history.push('/');
@@ -34,22 +34,24 @@ class Administrador extends Component {
   render() {
     return (
       <div>
-        <Header funcao={this.logout}/>
+        <Header funcao={this.logout} />
         <main className="conteudoPrincipal">
-          <section className="conteudoPrincipalAdministrador">
-            <div className="containerAdmin" >
-              <select id="option__acessolivre" value={this.state.pagina} onChange={this.mudaEstadoPagina}> 
-                <option value="Selecione">Selecione a tela desejada</option>
-                <option value="/admUsuario">Usuários</option>
-                <option value="/admTipo">Tipo</option>
-                <option value="/admCategoria">Categoria</option>
-                <option value="/admVeiculo">Veículo</option>
-                <option value="/admLancamento">Lançamentos</option>
-              </select>
-              <button className="conteudoPrincipal-btn" onClick={this.mudaParaTela}>Ir Para Tela</button>
-            </div>
-          </section>
-          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
+          <div className="cadastroPrincipal">
+            <img src={telaFundo} alt="Família vendo tv" className="imgFamiliaFundo" />
+            <section className="conteudoPrincipalAdministrador">
+              <div className="containerAdmin1" >
+                <select id="option__acessolivre" class="selectAdmin" value={this.state.pagina} onChange={this.mudaEstadoPagina}>
+                  <option value="Selecione">Selecione a tela desejada</option>
+                  <option value="/admUsuario">Usuários</option>
+                  <option value="/admTipo">Tipo</option>
+                  <option value="/admCategoria">Categoria</option>
+                  <option value="/admVeiculo">Veículo</option>
+                  <option value="/admLancamento">Lançamentos</option>
+                </select>
+                <button className="conteudoPrincipal-btn" onClick={this.mudaParaTela}>Ir Para Tela</button>
+              </div>
+            </section>
+          </div>
         </main>
         <Footer />
       </div>

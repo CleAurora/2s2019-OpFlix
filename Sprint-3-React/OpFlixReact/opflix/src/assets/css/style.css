@@ -4,6 +4,9 @@
     display: flex;
     background-color: #fff;
     text-align: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
 
 .itemMenu{
@@ -18,8 +21,12 @@ h1{
     padding: 20px;
     color: #fff;
     text-align: center;
-    position: relative;
+    position: fixed;
+    top: 45vh;
+    width: 100%;
+    
 }
+
 
 /*css footer para todas as telas*/
 
@@ -29,10 +36,11 @@ footer{
 
 
 
-/*css tela de cadastro de Usuário e de login*/
+/*css tela de cadastro de Usuário e de login e de administrador*/
 .cadastroPrincipal{
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .imgFamiliaFundo{
@@ -40,8 +48,8 @@ footer{
 }
 
 .conteudoPrincipal{
+    margin-top: 8vh;
     background-color: #484445;
-    padding: 20px;
 }
 
 .container{
@@ -66,6 +74,27 @@ footer{
     padding: 10px 140px 100px 10px;
     margin: 10px;
 }
+
+.containerAdmin1{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #fff;
+    padding: 20px;
+    width: 90%;
+    margin-right: 320px;
+}
+.selectAdmin{
+    margin: 20px;
+    padding: 10px;
+}
+.conteudoPrincipal-btn{
+    margin: 20px;
+    padding: 10px;
+}
+
+
+
 
 
 

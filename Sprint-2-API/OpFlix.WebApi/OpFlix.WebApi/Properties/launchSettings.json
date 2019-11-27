@@ -18,8 +18,8 @@
     "OpFlix.WebApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "http://192.168.3.192:5000",
-      //"applicationUrl": http: 192. ip mac:5000, - igual o de cima
+      "applicationUrl": "http://localhost:5000",
+      //"applicationUrl": http: 192. ip mac:5000, - igual o de cima 192.168.3.192:5000
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
