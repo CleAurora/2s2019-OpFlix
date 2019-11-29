@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, AsyncStorage, View, Image, StyleSheet, ImageBackground, ScrollView } from 'react-native';
+import { Text, AsyncStorage, View, Image, StyleSheet, ImageBackground, ScrollView, TouchableHighlight } from 'react-native';
 import planoDeFundo from '../assets/img/familia-vendo-tv1.jpg'
 import menu from '../assets/img/menuhamburger.png'
+import sair from '../assets/img/logout.png'
 
 class Profile extends Component {
 
@@ -35,6 +36,10 @@ class Profile extends Component {
     } catch (error) { }
   };
 
+  _logout = async () => {
+    await this.props.navigation.navigate("AuthStack");
+  }
+
   render() {
     return (
       <View>
@@ -49,16 +54,32 @@ class Profile extends Component {
             <Text style={styles.textTittle}>OPFLIX</Text>
           </View>
 
+
           <ScrollView>
             <Text></Text>
             <Text></Text>
             <View style={styles.caixaBranca1}>
+              <Text></Text>
+              <Text></Text>
+              <TouchableHighlight
+                onPress={() => this._logout()}
+              >
+                <Image
+                  source={sair}
+                  style={{ width: 40, height: 40, marginHorizontal: 143, resizeMode: "stretch", tintColor: '#484445' }}></Image>
+              </TouchableHighlight>
+              <Text></Text>
+              <Text></Text>
               <Text style={styles.tittleText1}>Código de Segurança</Text>
               <View>
                 <Text style={styles.text}>{this.state.token}</Text>
               </View>
             </View>
           </ScrollView>
+
+
+
+
 
         </ImageBackground>
       </View>
