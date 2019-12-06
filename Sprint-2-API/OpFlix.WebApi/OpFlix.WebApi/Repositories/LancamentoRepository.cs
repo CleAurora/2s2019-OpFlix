@@ -42,7 +42,7 @@ namespace OpFlix.WebApi.Repositories
             using (OpFlixContext ctx = new OpFlixContext())
             {
                 return ctx.Lancamentos.FirstOrDefault(item => item.IdLancamento == id);
-            } 
+            }
         }
 
 
@@ -165,7 +165,7 @@ namespace OpFlix.WebApi.Repositories
             {
                 return ctx.Lancamentos.Where(item => item.IdClassificacao == idClassificacao).ToList();
             }
-            
+
         }
 
         //veiculação, mídia e plataforma, categoria
