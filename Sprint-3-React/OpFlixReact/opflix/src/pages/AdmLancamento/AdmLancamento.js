@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 
 //imagem
 import telaFundo from '../../assets/img/Swisscom_12_17.jpg';
+import mundo from '../../assets/img/mundo.png';
 
 import Axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
+import { Link } from 'react-router-dom';
 
 class AdmLancamento extends Component {
   constructor() {
@@ -14,7 +16,7 @@ class AdmLancamento extends Component {
     this.state = {
       lista: [],
       listaLancamentos: [],
-      listaLancamentosSelect:[],
+      listaLancamentosSelect: [],
       listaVeiculos: [],
       listaCategorias: [],
       listaTipos: [],
@@ -204,8 +206,8 @@ class AdmLancamento extends Component {
     })
       .then(response => {
         if (response.status === 200) {
-          this.setState({listaLancamentosSelect: response.data});
-        } 
+          this.setState({ listaLancamentosSelect: response.data });
+        }
       });
   }
 
@@ -225,7 +227,7 @@ class AdmLancamento extends Component {
             editaNome: response.nome,
             editaSinopse: response.sinopse,
             editaDuracao: response.duracao,
-            editaDataLancamento: response.dataLancamento.slice(0,10),
+            editaDataLancamento: response.dataLancamento.slice(0, 10),
             editaIdVeiculo: response.idVeiculo,
             editaIdCategoria: response.idCategoria,
             editaIdClassificacao: response.idClassificacao,
@@ -544,7 +546,11 @@ class AdmLancamento extends Component {
             <button className="conteudoPrincipal-btn" onClick={this.alteraInformacoes}>Alterar Informações</button>
             <button className="conteudoPrincipal-btn" onClick={this.deletaLancamento}>Deletar Lançamento</button>
 
+            <button>
+              <Link to="/Mapa"><img src={mundo} width="50px" alt="Mundo" /></Link>
+            </button>
           </div>
+
 
           <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
 

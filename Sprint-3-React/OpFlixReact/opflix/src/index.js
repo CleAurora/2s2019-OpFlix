@@ -15,6 +15,7 @@ import Login from './pages/Login/Login';
 import TelaDetalhesFilmes from './pages/TelaDetalhesFilmes/TelaDetalhesFilmes';
 import TelaInicialUsuario from './pages/TelaInicialUsuario/TelaInicialUsuario';
 import NaoEncontrado from './pages/NaoEncontrado/NaoEncontrado';
+import Mapa from './pages/Mapa/Mapa';
 
 const PrivateRouting = ({ component: Component }) => (
     <Route
@@ -59,6 +60,7 @@ const routing = (
                 <Route path='/login' component={Login} />
                 <PrivateRouting path='/telaDetalhesFilmes' component={TelaDetalhesFilmes} />
                 <PrivateRouting path='/telaInicialUsuario' component={TelaInicialUsuario} />
+                <Route path='/Mapa' component={Mapa} />
                 <Route component={NaoEncontrado} />
             </Switch>
         </div>
