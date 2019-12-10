@@ -159,6 +159,18 @@ h3{
     text-align: center;
 }
 
+.pin-icon{
+    width: 30px;
+}
+
+.TituloPin{
+    width: 120px;
+    text-align: center;
+    background-color: #fff;
+    font-size: 12px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
 /*Layout Responsivo*/
 @media (max-width: 789px){
     #tabela-lista{

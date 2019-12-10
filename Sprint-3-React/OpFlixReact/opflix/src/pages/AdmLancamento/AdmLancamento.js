@@ -36,7 +36,9 @@ class AdmLancamento extends Component {
       editaIdClassificacao: 0,
       editaIdTipo: 0,
       editaIdVeiculo: 0,
-      idLancamento: 0
+      idLancamento: 0,
+      latitude: '',
+      longitude: '',
     };
   }
 
@@ -49,6 +51,14 @@ class AdmLancamento extends Component {
 
   atualizaNome = (event) => {
     this.setState({ nome: event.target.value });
+  }
+
+  atualizaLatitude = (event) => {
+    this.setState({ latitude: event.target.value });
+  }
+
+  atualizaLongitude = (event) => {
+    this.setState({ longitude: event.target.value });
   }
 
   atualizaSinopse = (event) => {
@@ -280,6 +290,36 @@ class AdmLancamento extends Component {
         }
       })
       .catch(error => this.setState({ erro: "Oops! Tem erro.." }))
+  }
+
+  cadastraLocalizacoes = (event) => {
+    event.preventDefault();
+    Axios.post('http://localhost:5000/api/localizacoes', {
+      latitude: this.state.latitude,
+      longitude: this.state.longitude,
+      lancamento: {
+        titulo: this.state.nome
+      }
+    },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer " + localStorage.getItem("usuario-opflix")
+        }
+      })
+      .then(response => {
+        if (response.status === 200) {
+          this.setState({
+            lista: [],
+            nome: '',
+            longitude: '',
+            latitude: ''
+          });
+        } else {
+          this.setState({ erro: 'Oops!' })
+        }
+      })
+      .catch(error => this.setState({ erro: 'Falha ao tentar cadastrar categoria!' }))
   }
 
   alteraInformacoes = (event) => {
@@ -546,14 +586,43 @@ class AdmLancamento extends Component {
             <button className="conteudoPrincipal-btn" onClick={this.alteraInformacoes}>Alterar Informações</button>
             <button className="conteudoPrincipal-btn" onClick={this.deletaLancamento}>Deletar Lançamento</button>
 
+
+            <h3>Formulário para Cadastrar a Localização do Lançamento </h3>
+            <div className="container">
+              <input type="text"
+                placeholder="Digite o Título do lançamento para cadastrar localização"
+                onChange={this.atualizaNome}
+                value={this.state.nome}
+              />
+
+              <input type="text"
+                placeholder="Digite a Latitude"
+                onChange={this.atualizaLatitude}
+                value={this.state.latitude}
+              />
+
+              <input type="text"
+                placeholder="Digite a Longitude"
+                onChange={this.atualizaLongitude}
+                value={this.state.longitude}
+              />
+
+              <button
+                className="conteudoPrincipal-btn"
+                onClick={this.cadastraLocalizacoes}
+              >
+                Cadastrar
+            </button>
+            </div>
             <button>
               <Link to="/Mapa"><img src={mundo} width="50px" alt="Mundo" /></Link>
             </button>
+
           </div>
 
 
-          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
 
+          <img src={telaFundo} alt="Família vendo tv" className="telaFundo" />
         </main>
         <Footer />
       </div>

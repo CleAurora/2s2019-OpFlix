@@ -3,11 +3,11 @@ import Axios from 'axios';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import GoogleMapReact from 'google-map-react';
-import PinIcon from "../../assets/img/pin.jpg";
+import PinIcon from "../../assets/img/loc.png";
 
 const Pin = ({ lancamento }) =>
   <div className="pin">
-    <img scr={PinIcon} alt="Pin" className="pin-icon" />
+    <img src={PinIcon} alt="Pin" className="pin-icon" />
     <p className="TituloPin">{lancamento.titulo}</p>
   </div>
 
@@ -59,9 +59,6 @@ export default class Mapa extends Component {
         <Header funcao={this.logout} />
         <main>
           <h2>OpFlix pelo mundo!</h2>
-
-
-
 
           {this.state.carregarMapa === false ? <span /> :
             <div style={{
